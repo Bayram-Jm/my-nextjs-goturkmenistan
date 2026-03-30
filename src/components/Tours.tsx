@@ -23,7 +23,7 @@ const tourPlan = [
 ];
 
 interface ToursProps {
-  onBookNow: () => void;
+  onBookNow?: () => void;
 }
 
 export default function Tours({ onBookNow }: ToursProps) {
@@ -241,7 +241,7 @@ export default function Tours({ onBookNow }: ToursProps) {
                 {/* Footer */}
                 <div className="px-8 pb-8">
                   <button
-                    onClick={() => { setPlanOpen(false); onBookNow(); }}
+                    onClick={() => { setPlanOpen(false); onBookNow?.(); }}
                     className="w-full py-3.5 rounded-lg font-righteous text-sm text-white uppercase tracking-[0.28px]"
                     style={{ background: "linear-gradient(90deg, #e93725 12%, #e9364d 34%, #e93683 60%, #e938c9 100%)" }}
                   >
