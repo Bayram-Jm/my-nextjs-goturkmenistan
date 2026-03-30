@@ -28,7 +28,6 @@ export default function Home() {
       <MobileMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        onBookNow={() => { setIsMenuOpen(false); setIsBookOpen(true); }}
       />
       <Hero onBookNow={() => setIsBookOpen(true)} />
       <Ashgabat />
