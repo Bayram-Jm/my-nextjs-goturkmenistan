@@ -6,8 +6,8 @@ import Image from "next/image";
 import DatePicker from "./DatePicker";
 
 interface BookTicketProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 interface FormData {
