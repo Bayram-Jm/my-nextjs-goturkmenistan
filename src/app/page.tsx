@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Ashgabat from "@/components/Ashgabat";
@@ -12,6 +15,8 @@ import AppUse from "@/components/AppUse";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [isBookOpen, setIsBookOpen] = useState(false);
+
   return (
     <main>
       <Header />
@@ -19,11 +24,11 @@ export default function Home() {
       <Ashgabat />
       <Events />
       <Heritage />
-      <Tours />
+      <Tours onBookNow={() => setIsBookOpen(true)} />
       <Nature />
       <Cuisine />
       <PayWithEase />
-      <BookTicket />
+      <BookTicket isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
       <AppUse />
       <Footer />
     </main>
