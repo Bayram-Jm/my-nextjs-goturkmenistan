@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #100706;
+  color: #faf5f5;
+  overflow-x: hidden;
+}
+
+/* Carousel left padding — aligns first card with section headings on all screen sizes.
+   On screens ≤1440px: 20px (mobile) / 120px (desktop) from viewport left.
+   On screens >1440px: offset = (viewport - 1440) / 2 + 120px so it lines up
+   with max-w-[1440px] content area. */
+.carousel-pl {
+  padding-left: max(20px, calc((100vw - 1440px) / 2 + 20px));
+  scroll-padding-left: max(20px, calc((100vw - 1440px) / 2 + 20px));
+}
+@media (min-width: 1024px) {
+  .carousel-pl {
+    padding-left: max(120px, calc((100vw - 1440px) / 2 + 120px));
+    scroll-padding-left: max(120px, calc((100vw - 1440px) / 2 + 120px));
+  }
+}
+
+/* Hide scrollbar for carousels */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
