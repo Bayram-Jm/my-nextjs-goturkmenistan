@@ -31,7 +31,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
 
   const onSubmit = (data: FormData) => {
     console.log("Booking submitted:", data);
-    onClose();
+    onClose?.();
   };
 
   return (
