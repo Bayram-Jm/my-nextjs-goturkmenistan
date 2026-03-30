@@ -13,14 +13,24 @@ import PayWithEase from "@/components/PayWithEase";
 import BookTicket from "@/components/BookTicket";
 import AppUse from "@/components/AppUse";
 import Footer from "@/components/Footer";
+import MobileMenu from "@/components/MobileMenu";
 
 export default function Home() {
   const [isBookOpen, setIsBookOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <main>
-      <Header />
-      <Hero />
+      <Header
+        onMenuOpen={() => setIsMenuOpen(true)}
+        onBookNow={() => setIsBookOpen(true)}
+      />
+      <MobileMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        onBookNow={() => { setIsMenuOpen(false); setIsBookOpen(true); }}
+      />
+      <Hero onBookNow={() => setIsBookOpen(true)} />
       <Ashgabat />
       <Events />
       <Heritage />
