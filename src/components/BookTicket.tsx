@@ -63,8 +63,8 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
 
             {/* Header */}
             <div className="px-6 mt-4 flex items-center justify-between">
-              <h2 className="font-righteous text-[22px] leading-[1.1] text-[#faf5f5]">
-                Book Your<br />Adventure
+              <h2 className="font-righteous text-[22px] leading-[1.1] text-[#faf5f5] whitespace-nowrap">
+                Book Your Adventure
               </h2>
               <button
                 onClick={onClose}
@@ -76,8 +76,8 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
               </button>
             </div>
 
-            <p className="px-6 mt-2 font-inter text-[13px] text-[rgba(250,245,245,0.5)] leading-[1.5] max-w-[268px]">
-              Fill in your details and we&apos;ll craft the perfect Turkmenistan experience for you.
+            <p className="px-6 mt-2 font-inter text-[13px] text-[rgba(250,245,245,0.5)] leading-[1.5]">
+              Fill in your details and we&apos;ll craft<br />the perfect Turkmenistan experience for you.
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} className="px-6 mt-6 flex flex-col gap-5 pb-8">
