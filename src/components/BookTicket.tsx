@@ -54,7 +54,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "tween", duration: 0.3, ease: "easeOut" }}
-            className="lg:hidden relative w-full max-w-[391px] bg-[#100706] border-t border-l border-r border-[rgba(67,67,67,0.4)] rounded-t-[28px] overflow-y-auto max-h-[90vh]"
+            className="lg:hidden relative w-full bg-[#100706] border-t border-[rgba(67,67,67,0.4)] rounded-t-[28px] overflow-y-auto max-h-[90vh]"
           >
             {/* Drag handle */}
             <div className="flex justify-center mt-3">

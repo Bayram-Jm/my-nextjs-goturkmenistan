@@ -57,11 +57,8 @@ export default function Ashgabat() {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#100706] leading-[1.1] lg:leading-[0.94] w-[353px] lg:w-[879px]">
-          GUINNESS-CERTIFIED BEAUTIFUL
-        </h2>
-        <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#100706] leading-[1.1] lg:leading-[0.94] text-right w-[353px] lg:w-[663px] lg:ml-auto">
-          THE ONE AND ONLY ASHGABAT
+        <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#100706] leading-[1.1] lg:leading-[0.94]">
+          White Marble Magic
         </h2>
       </motion.div>
 
