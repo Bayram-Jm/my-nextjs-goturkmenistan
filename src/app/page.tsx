@@ -33,12 +33,12 @@ export default function Home() {
       <Ashgabat />
       <Events />
       <Heritage />
-      <Tours onBookNow={() => setIsBookOpen(true)} />
       <Nature />
       <Cuisine />
       <PayWithEase />
-      <BookTicket isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
       <AppUse />
+      <Tours onBookNow={() => setIsBookOpen(true)} />
+      <BookTicket isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
       <Footer />
     </main>
   );
