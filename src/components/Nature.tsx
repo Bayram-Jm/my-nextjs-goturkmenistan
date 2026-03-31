@@ -5,21 +5,21 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const natureCards = [
-  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-1.jpg" },
-  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-2.jpg" },
-  { name: "Koytendag Mountains",       location: "Koytendag/Lebap",          image: "/images/nature-3.jpg" },
-  { name: "Foothills of the Kopetdag", location: "Mountains Kopetdag/Ahal",  image: "/images/nature-4.jpg" },
-  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-5.jpg" },
-  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-6.jpg" },
-  { name: "Craters in the desert",     location: "Desert Karakum/Ahal",      image: "/images/nature-7.jpg" },
-  { name: "Health Path",               location: "Mountains Kopetdag/Ahal",  image: "/images/nature-8.jpg" },
-  { name: "Kov Ata Cave",              location: "Mountains Kopetdag/Ahal",  image: "/images/nature-9.jpg" },
-  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-10.jpg" },
-  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-11.jpg" },
-  { name: "Camp in Karakum",           location: "Karakum/Ahal",             image: "/images/nature-12.jpg" },
-  { name: "Khauz-Khan Lakes",          location: "Mary",                     image: "/images/nature-13.jpg" },
-  { name: "Nokhur Valley",             location: "Nokhur/Ahal",              image: "/images/nature-14.jpg" },
-  { name: "Avaza",                     location: "Caspian Sea/Balkan",       image: "/images/nature-15.jpg" },
+  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-1.png" },
+  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-2.png" },
+  { name: "Koytendag Mountains",       location: "Koytendag/Lebap",          image: "/images/nature-3.png" },
+  { name: "Foothills of the Kopetdag", location: "Mountains Kopetdag/Ahal",  image: "/images/nature-4.png" },
+  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-5.png" },
+  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-6.png" },
+  { name: "Craters in the desert",     location: "Desert Karakum/Ahal",      image: "/images/nature-7.png" },
+  { name: "Health Path",               location: "Mountains Kopetdag/Ahal",  image: "/images/nature-8.png" },
+  { name: "Kov Ata Cave",              location: "Mountains Kopetdag/Ahal",  image: "/images/nature-9.png" },
+  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-10.png" },
+  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-11.png" },
+  { name: "Camp in Karakum",           location: "Karakum/Ahal",             image: "/images/nature-12.png" },
+  { name: "Khauz-Khan Lakes",          location: "Mary",                     image: "/images/nature-13.png" },
+  { name: "Nokhur Valley",             location: "Nokhur/Ahal",              image: "/images/nature-14.png" },
+  { name: "Avaza",                     location: "Caspian Sea/Balkan",       image: "/images/nature-15.png" },
 ];
 
 const DOT_COUNT = natureCards.length;

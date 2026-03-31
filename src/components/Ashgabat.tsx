@@ -8,16 +8,16 @@ const DOT_COUNT = 5;
 
 const images = [
   { src: "/images/ashgabat-1.jpg",  label: "Sunset in Ashgabat" },
-  { src: "/images/ashgabat-2.jpg",  label: "Sunset in Ashgabat" },
-  { src: "/images/ashgabat-3.jpg",  label: "Holiday in Ashgabat" },
-  { src: "/images/ashgabat-4.jpg",  label: "Independence Park" },
-  { src: "/images/ashgabat-5.jpg",  label: "Independence Monument" },
-  { src: "/images/ashgabat-6.jpg",  label: "Indoor Ferris wheel" },
-  { src: "/images/ashgabat-7.jpg",  label: "Hotel Ashgabat" },
-  { src: "/images/ashgabat-8.jpg",  label: "Hotel Yyldyz" },
-  { src: "/images/ashgabat-9.jpg",  label: "Wedding House" },
-  { src: "/images/ashgabat-10.jpg", label: "Monument to Neutrality" },
-  { src: "/images/ashgabat-11.jpg", label: "Indoor Ferris wheel" },
+  { src: "/images/ashgabat-2.png",  label: "Sunset in Ashgabat" },
+  { src: "/images/ashgabat-3.png",  label: "Holiday in Ashgabat" },
+  { src: "/images/ashgabat-4.png",  label: "Independence Park" },
+  { src: "/images/ashgabat-5.png",  label: "Independence Monument" },
+  { src: "/images/ashgabat-6.png",  label: "Indoor Ferris wheel" },
+  { src: "/images/ashgabat-7.png",  label: "Hotel Ashgabat" },
+  { src: "/images/ashgabat-8.png",  label: "Hotel Yyldyz" },
+  { src: "/images/ashgabat-9.png",  label: "Wedding House" },
+  { src: "/images/ashgabat-10.png", label: "Monument to Neutrality" },
+  { src: "/images/ashgabat-11.png", label: "Indoor Ferris wheel" },
 ];
 
 export default function Ashgabat() {

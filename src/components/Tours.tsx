@@ -83,7 +83,7 @@ export default function Tours({ onBookNow }: ToursProps) {
             {/* Image */}
             <div className="w-full lg:w-[500px] h-[240px] lg:h-[480px] relative flex-shrink-0">
               <Image
-                src="/images/tour-card.jpg"
+                src="/images/tour-card.png"
                 alt="3 days with Nokhur"
                 fill
                 className="object-cover"

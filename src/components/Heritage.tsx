@@ -5,12 +5,12 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const stories = [
-  { name: "Dayahatyn",       image: "/images/story-1.jpg" },
-  { name: "Merw",            image: "/images/story-2.jpg" },
-  { name: "Koneurgench",     image: "/images/story-3.jpg" },
-  { name: "Astanababa",      image: "/images/story-4.jpg" },
-  { name: "Seyitjemalledin", image: "/images/story-5.jpg" },
-  { name: "Abiwerd",         image: "/images/story-6.jpg" },
+  { name: "Dayahatyn",       image: "/images/story-1.png" },
+  { name: "Merw",            image: "/images/story-2.png" },
+  { name: "Koneurgench",     image: "/images/story-3.png" },
+  { name: "Astanababa",      image: "/images/story-4.png" },
+  { name: "Seyitjemalledin", image: "/images/story-5.png" },
+  { name: "Abiwerd",         image: "/images/story-6.png" },
 ];
 
 const DOT_COUNT = stories.length;
@@ -64,7 +64,7 @@ export default function Heritage() {
               WEAR THE PAST WALK THROUGH IT
             </h2>
             <div className="lg:hidden mt-8 w-full h-[441px] rounded-[20px] overflow-hidden relative">
-              <Image src="/images/heritage-main.jpg" alt="Heritage" fill className="object-cover" />
+              <Image src="/images/heritage-main.png" alt="Heritage" fill className="object-cover" />
             </div>
             <p className="font-righteous text-2xl text-[#faf5f5] mt-10">Unforgettable Experiences</p>
             <p className="font-inter text-base text-[rgba(250,245,245,0.85)] leading-[1.6] max-w-[571px] mt-4">
@@ -74,7 +74,7 @@ export default function Heritage() {
             </p>
           </div>
           <div className="hidden lg:block w-[384px] h-[423px] rounded-[20px] overflow-hidden relative flex-shrink-0">
-            <Image src="/images/heritage-main.jpg" alt="Heritage" fill className="object-cover" />
+            <Image src="/images/heritage-main.png" alt="Heritage" fill className="object-cover" />
           </div>
         </div>
       </div>

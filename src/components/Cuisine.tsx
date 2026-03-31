@@ -6,13 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const dishes = [
   { name: "Autumn Velvet", label: "National dish", image: "/images/dish-1.jpg" },
-  { name: "Yarma",         label: "National dish", image: "/images/dish-2.jpg" },
-  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-3.jpg" },
-  { name: "Gowurma",       label: "National dish", image: "/images/dish-4.jpg" },
-  { name: "Salad",         label: "National dish", image: "/images/dish-5.jpg" },
-  { name: "Unash",         label: "National dish", image: "/images/dish-6.jpg" },
-  { name: "Somsa",         label: "National dish", image: "/images/dish-7.jpg" },
-  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-8.jpg" },
+  { name: "Yarma",         label: "National dish", image: "/images/dish-2.png" },
+  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-3.png" },
+  { name: "Gowurma",       label: "National dish", image: "/images/dish-4.png" },
+  { name: "Salad",         label: "National dish", image: "/images/dish-5.png" },
+  { name: "Unash",         label: "National dish", image: "/images/dish-6.png" },
+  { name: "Somsa",         label: "National dish", image: "/images/dish-7.png" },
+  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-8.png" },
 ];
 
 const DOT_COUNT = 5;
@@ -87,7 +87,7 @@ export default function Cuisine() {
       <div className="mt-10 flex justify-center px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">
         <div
           className="w-[353px] lg:w-[384px] h-[416px] lg:h-[503px] rounded-[20px] relative overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/cuisine-video.jpg')" }}
+          style={{ backgroundImage: "url('/images/cuisine-video.png')" }}
         >
           <div className="absolute inset-0 flex items-center justify-center">
             <button
