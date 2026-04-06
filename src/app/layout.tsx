@@ -22,6 +22,14 @@ export const metadata: Metadata = {
   title: "Go Turkmenistan — Discover the Undiscovered",
   description:
     "Explore Turkmenistan — the world's last great undiscovered destination. Ancient history, dramatic landscapes, and warm hospitality await.",
+  icons: {
+    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

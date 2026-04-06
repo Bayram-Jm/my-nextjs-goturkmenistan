@@ -36,9 +36,9 @@ export default function Home() {
       <Nature />
       <Cuisine />
       <PayWithEase />
-      <AppUse />
       <Tours onBookNow={() => setIsBookOpen(true)} />
       <BookTicket isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
+      <AppUse />
       <Footer />
     </main>
   );

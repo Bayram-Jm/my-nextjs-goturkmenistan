@@ -139,7 +139,7 @@ export default function Events() {
       {/* Carousel */}
       <div
         ref={carouselRef}
-        className="flex overflow-x-auto scrollbar-hide gap-2 snap-x snap-mandatory"
+        className="flex overflow-x-auto scrollbar-hide gap-2 snap-x snap-mandatory lg:pl-[120px]"
         style={{ paddingLeft: "max(20px, calc((100vw - 1440px) / 2 + 20px))", scrollPaddingLeft: "max(20px, calc((100vw - 1440px) / 2 + 20px))" }}
       >
         {events.map((event, index) => (

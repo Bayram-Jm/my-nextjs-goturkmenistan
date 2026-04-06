@@ -34,19 +34,12 @@ const childVariants = {
 export default function Hero({ onBookNow }: HeroProps) {
   return (
     <section className="relative h-screen w-full lg:h-[800px]">
-      {/* Background video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover object-[20%_center] lg:object-center"
-      >
-        {/* Safari — MP4 */}
-        <source src="/videos/fromsafari.mp4" type="video/mp4" />
-        {/* Chrome, Firefox, Edge — WebM */}
-        <source src="/videos/forchrome.webm" type="video/webm" />
-      </video>
+      {/* Background image */}
+      <img
+        src="/images/hero.jpg"
+        alt="Turkmenistan landscape"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
 
       {/* Gradient overlay */}
       <div

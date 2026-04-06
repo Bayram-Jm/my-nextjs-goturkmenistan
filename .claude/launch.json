@@ -3,14 +3,14 @@
   "configurations": [
     {
       "name": "Next.js Dev Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/bayramjumayev/.nvm/versions/node/v20.20.2/bin:$PATH && npm run dev"],
       "port": 3000
     },
     {
       "name": "Next.js Production Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/bayramjumayev/.nvm/versions/node/v20.20.2/bin:$PATH && npm run start"],
       "port": 3000
     }
   ]
