@@ -18,37 +18,45 @@ export default function AppUse() {
         </div>
 
         {/* App Cards */}
-        <div className="flex gap-5 items-start justify-center lg:justify-start">
+        <div className="grid grid-cols-2 gap-5 max-w-[340px] lg:max-w-none">
 
           {/* Online Taxi */}
-          <div className="flex flex-col items-center gap-6 flex-shrink-0" style={{ width: 154 }}>
-            <div className="flex flex-col items-center gap-1.5 w-full">
-              <div className="flex flex-col items-center gap-3">
-                <p className="font-righteous text-[18px] text-[#faf5f5] text-center">Online taxi</p>
-                <div className="w-[60px] h-[60px] relative rounded-[14px] overflow-hidden">
-                  <Image src="/images/app-taxi-icon.png" alt="Online taxi app" fill className="object-cover" />
-                </div>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-3 pb-6">
+              <p className="font-righteous text-[18px] text-[#faf5f5] text-center">Online taxi</p>
+              <div className="w-[60px] h-[60px] relative rounded-[14px] overflow-hidden">
+                <Image src="/images/app-taxi-icon.png" alt="Online taxi app" fill className="object-cover" />
               </div>
               <p className="font-inter text-base text-[#faf5f5] text-center leading-[1.6]">To call a taxi.</p>
             </div>
-            <div className="relative flex-shrink-0" style={{ width: 154, height: 318 }}>
-              <Image src="/images/app-taxi-screen.png" alt="Taxi app screenshot" fill className="object-cover object-top" />
+            {/* Fixed height — Geliber bilen deň */}
+            <div className="relative w-full" style={{ height: 312 }}>
+              <Image
+                src="/images/app-taxi-screen.png"
+                alt="Taxi app screenshot"
+                fill
+                className="object-contain object-bottom"
+              />
             </div>
           </div>
 
           {/* Gerekli / Geliber */}
-          <div className="flex flex-col items-center gap-6 flex-shrink-0" style={{ width: 154 }}>
-            <div className="flex flex-col items-center gap-1.5 w-full">
-              <div className="flex flex-col items-center gap-3">
-                <p className="font-righteous text-[18px] text-[#faf5f5] text-center">Gerekli</p>
-                <div className="w-[60px] h-[60px] relative rounded-[14px] overflow-hidden">
-                  <Image src="/images/app-geliber-icon.png" alt="Geliber app" fill className="object-cover" />
-                </div>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-3 pb-6">
+              <p className="font-righteous text-[18px] text-[#faf5f5] text-center">Gerekli</p>
+              <div className="w-[60px] h-[60px] relative rounded-[14px] overflow-hidden">
+                <Image src="/images/app-geliber-icon.png" alt="Geliber app" fill className="object-cover" />
               </div>
               <p className="font-inter text-base text-[#faf5f5] text-center leading-[1.6]">For food delivery.</p>
             </div>
-            <div className="relative flex-shrink-0" style={{ width: 154, height: 318 }}>
-              <Image src="/images/app-geliber-screen.png" alt="Geliber app screenshot" fill className="object-cover object-top" />
+            {/* Deň height */}
+            <div className="relative w-full" style={{ height: 312 }}>
+              <Image
+                src="/images/app-geliber-scree.png"
+                alt="Geliber app screenshot"
+                fill
+                className="object-contain object-bottom"
+              />
             </div>
           </div>
 
