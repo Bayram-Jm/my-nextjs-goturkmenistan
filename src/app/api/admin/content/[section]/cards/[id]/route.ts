@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { z } from "zod";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { getByPath, setDeep } from "@/lib/jsonUtils";
 import type { JsonObject } from "@/lib/jsonUtils";
 import { CAROUSEL_CONFIG } from "@/lib/carouselConfig";
+import { getContent, setContent, deleteImage } from "@/lib/contentStore";
 
 const ALLOWED_SECTIONS = Object.keys(CAROUSEL_CONFIG);
 
@@ -17,21 +16,6 @@ const EditCardSchema = z.object({
 function auth(req: NextRequest) {
   const token = req.cookies.get(COOKIE_NAME)?.value;
   return token ? verifyToken(token) : null;
-}
-
-function readContent(section: string): JsonObject | null {
-  try {
-    const fp = path.join(process.cwd(), "content", `${section}.json`);
-    return JSON.parse(fs.readFileSync(fp, "utf-8"));
-  } catch { return null; }
-}
-
-function writeContent(section: string, content: JsonObject): boolean {
-  try {
-    const fp = path.join(process.cwd(), "content", `${section}.json`);
-    fs.writeFileSync(fp, JSON.stringify(content, null, 2) + "\n", "utf-8");
-    return true;
-  } catch { return false; }
 }
 
 /* ── DELETE /api/admin/content/[section]/cards/[id] ──────────────────── */
@@ -49,8 +33,12 @@ export async function DELETE(
   const arrayPath = req.nextUrl.searchParams.get("arrayPath");
   if (!arrayPath) return NextResponse.json({ error: "Missing arrayPath" }, { status: 400 });
 
-  const content = readContent(section);
-  if (!content) return NextResponse.json({ error: "Content file not found" }, { status: 404 });
+  let content: JsonObject;
+  try {
+    content = await getContent(section) as JsonObject;
+  } catch {
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
+  }
 
   const arr = getByPath(content, arrayPath);
   if (!Array.isArray(arr)) {
@@ -76,20 +64,21 @@ export async function DELETE(
   const newArray = items.filter((_, i) => i !== cardIndex);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updated = setDeep(content as any, arrayPath, newArray);
-  if (!writeContent(section, updated)) {
+  try {
+    await setContent(section, updated);
+  } catch (err) {
+    console.error("Failed to save:", err);
     return NextResponse.json({ error: "Failed to save" }, { status: 500 });
   }
 
   /* Delete associated uploaded images */
   const config = CAROUSEL_CONFIG[section];
   const imageFields = config.imageField ? [config.imageField] : [];
-  // Also check for any field named "icon" (apps section has both icon and screenshot)
   const extraImageFields = ["icon"];
   for (const field of [...imageFields, ...extraImageFields]) {
     const imgPath = card[field];
-    if (typeof imgPath === "string" && imgPath.startsWith("/uploads/")) {
-      const absPath = path.join(process.cwd(), "public", imgPath);
-      try { if (fs.existsSync(absPath)) fs.unlinkSync(absPath); } catch { /* non-critical */ }
+    if (typeof imgPath === "string" && imgPath) {
+      await deleteImage(imgPath);
     }
   }
 
@@ -118,8 +107,12 @@ export async function PATCH(
   }
   const { arrayPath, card: newCardData } = parsed.data;
 
-  const content = readContent(section);
-  if (!content) return NextResponse.json({ error: "Content file not found" }, { status: 404 });
+  let content: JsonObject;
+  try {
+    content = await getContent(section) as JsonObject;
+  } catch {
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
+  }
 
   const arr = getByPath(content, arrayPath);
   if (!Array.isArray(arr)) {
@@ -141,20 +134,18 @@ export async function PATCH(
   for (const field of imageFields) {
     const oldPath = oldCard[field];
     const newPath = updatedCard[field];
-    if (
-      typeof oldPath === "string" &&
-      oldPath.startsWith("/uploads/") &&
-      oldPath !== newPath
-    ) {
-      const absPath = path.join(process.cwd(), "public", oldPath);
-      try { if (fs.existsSync(absPath)) fs.unlinkSync(absPath); } catch { /* non-critical */ }
+    if (typeof oldPath === "string" && oldPath && oldPath !== newPath) {
+      await deleteImage(oldPath);
     }
   }
 
   const newArray = items.map((c, i) => (i === cardIndex ? updatedCard : c));
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updated = setDeep(content as any, arrayPath, newArray);
-  if (!writeContent(section, updated)) {
+  try {
+    await setContent(section, updated);
+  } catch (err) {
+    console.error("Failed to save:", err);
     return NextResponse.json({ error: "Failed to save" }, { status: 500 });
   }
 

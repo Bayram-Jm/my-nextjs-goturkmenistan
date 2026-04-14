@@ -3,11 +3,17 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import content from "../../content/events.json";
+import defaultContent from "../../content/events.json";
+
+type EventsContent = typeof defaultContent;
+
+interface EventsProps {
+  content?: EventsContent;
+}
 
 const DOT_COUNT = 3;
 
-export default function Events() {
+export default function Events({ content = defaultContent }: EventsProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);

@@ -3,11 +3,16 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import content from "../../content/heritage.json";
+import defaultContent from "../../content/heritage.json";
 
-const DOT_COUNT = content.sites.length;
+type HeritageContent = typeof defaultContent;
 
-export default function Heritage() {
+interface HeritageProps {
+  content?: HeritageContent;
+}
+
+export default function Heritage({ content = defaultContent }: HeritageProps) {
+  const dotCount = content.sites.length;
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -17,8 +22,8 @@ export default function Heritage() {
     if (!el) return;
     const maxScroll = el.scrollWidth - el.clientWidth;
     const progress = maxScroll > 0 ? el.scrollLeft / maxScroll : 0;
-    setActiveDot(Math.round(progress * (DOT_COUNT - 1)));
-  }, []);
+    setActiveDot(Math.round(progress * (dotCount - 1)));
+  }, [dotCount]);
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -40,7 +45,7 @@ export default function Heritage() {
     const el = carouselRef.current;
     if (!el) return;
     const maxScroll = el.scrollWidth - el.clientWidth;
-    el.scrollTo({ left: (index / (DOT_COUNT - 1)) * maxScroll, behavior: "smooth" });
+    el.scrollTo({ left: (index / (dotCount - 1)) * maxScroll, behavior: "smooth" });
   };
 
   const selected = selectedId !== null ? content.sites[selectedId] : null;
@@ -98,7 +103,7 @@ export default function Heritage() {
 
         {/* Pagination dots */}
         <div className="flex items-center justify-center gap-2 mt-8">
-          {Array.from({ length: DOT_COUNT }).map((_, i) => (
+          {Array.from({ length: dotCount }).map((_, i) => (
             <button
               key={i}
               onClick={() => scrollToDot(i)}

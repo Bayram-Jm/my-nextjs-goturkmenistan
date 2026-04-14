@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { z } from "zod";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { getByPath, setDeep } from "@/lib/jsonUtils";
 import type { JsonObject } from "@/lib/jsonUtils";
 import { CAROUSEL_CONFIG } from "@/lib/carouselConfig";
+import { getContent, setContent } from "@/lib/contentStore";
 
 const ALLOWED_SECTIONS = Object.keys(CAROUSEL_CONFIG);
 
@@ -39,12 +38,11 @@ export async function PATCH(
   }
   const { arrayPath, orderedIds } = parsed.data;
 
-  const filePath = path.join(process.cwd(), "content", `${section}.json`);
   let content: JsonObject;
   try {
-    content = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    content = await getContent(section) as JsonObject;
   } catch {
-    return NextResponse.json({ error: "Content file not found" }, { status: 404 });
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
   }
 
   const arr = getByPath(content, arrayPath);
@@ -52,7 +50,6 @@ export async function PATCH(
     return NextResponse.json({ error: "Array not found at path" }, { status: 400 });
   }
 
-  /* Sort the array according to orderedIds; items not in orderedIds go to end */
   const itemsById = new Map(
     (arr as JsonObject[]).map((item) => [item.id as string, item])
   );
@@ -61,7 +58,6 @@ export async function PATCH(
     const item = itemsById.get(id);
     if (item) sorted.push(item);
   }
-  /* Append any items that were not in orderedIds (safety net) */
   for (const item of arr as JsonObject[]) {
     if (!orderedIds.includes(item.id as string)) sorted.push(item);
   }
@@ -69,9 +65,9 @@ export async function PATCH(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updated = setDeep(content as any, arrayPath, sorted);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+    await setContent(section, updated);
   } catch (err) {
-    console.error("Failed to write content file:", err);
+    console.error("Failed to save:", err);
     return NextResponse.json({ error: "Failed to save" }, { status: 500 });
   }
 

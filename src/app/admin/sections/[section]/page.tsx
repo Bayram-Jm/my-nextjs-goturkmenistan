@@ -1,7 +1,8 @@
-import fs from "fs";
-import path from "path";
 import { notFound } from "next/navigation";
 import ContentForm from "@/components/admin/ContentForm";
+import { getContent } from "@/lib/contentStore";
+
+export const dynamic = "force-dynamic";
 
 /* ─── Section metadata ───────────────────────────────────────────────────── */
 const SECTION_META = {
@@ -29,16 +30,15 @@ interface Props {
   params: { section: string };
 }
 
-export default function SectionPage({ params }: Props) {
+export default async function SectionPage({ params }: Props) {
   const key = params.section as SectionKey;
   const meta = SECTION_META[key];
   if (!meta) notFound();
 
-  const filePath = path.join(process.cwd(), "content", `${key}.json`);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let initialContent: any;
   try {
-    initialContent = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    initialContent = await getContent(key);
   } catch {
     return (
       <p className="font-inter text-sm text-[#e93725]">

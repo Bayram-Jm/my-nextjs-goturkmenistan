@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { z } from "zod";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { getByPath, setDeep } from "@/lib/jsonUtils";
 import type { JsonObject } from "@/lib/jsonUtils";
 import { CAROUSEL_CONFIG } from "@/lib/carouselConfig";
+import { getContent, setContent, deleteImage } from "@/lib/contentStore";
 
 const ALLOWED_SECTIONS = Object.keys(CAROUSEL_CONFIG);
 
@@ -40,12 +39,11 @@ export async function POST(
   const { arrayPath, ids } = parsed.data;
   const idSet = new Set(ids);
 
-  const filePath = path.join(process.cwd(), "content", `${section}.json`);
   let content: JsonObject;
   try {
-    content = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    content = await getContent(section) as JsonObject;
   } catch {
-    return NextResponse.json({ error: "Content file not found" }, { status: 404 });
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
   }
 
   const arr = getByPath(content, arrayPath);
@@ -65,13 +63,12 @@ export async function POST(
 
   const deleted = items.filter((c) => idSet.has(c.id as string));
 
-  /* Save updated array */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updated = setDeep(content as any, arrayPath, remaining);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+    await setContent(section, updated);
   } catch (err) {
-    console.error("Failed to write content file:", err);
+    console.error("Failed to save:", err);
     return NextResponse.json({ error: "Failed to save" }, { status: 500 });
   }
 
@@ -81,9 +78,8 @@ export async function POST(
   for (const card of deleted) {
     for (const field of imageFields) {
       const imgPath = card[field];
-      if (typeof imgPath === "string" && imgPath.startsWith("/uploads/")) {
-        const absPath = path.join(process.cwd(), "public", imgPath);
-        try { if (fs.existsSync(absPath)) fs.unlinkSync(absPath); } catch { /* non-critical */ }
+      if (typeof imgPath === "string" && imgPath) {
+        await deleteImage(imgPath);
       }
     }
   }

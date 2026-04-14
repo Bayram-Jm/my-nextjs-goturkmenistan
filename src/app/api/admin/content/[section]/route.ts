@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
+import { getContent, setContent } from "@/lib/contentStore";
 
 const ALLOWED_SECTIONS = [
   "hero",
@@ -57,12 +56,11 @@ export async function POST(
     );
   }
 
-  // ── Write file ───────────────────────────────────────────────────
-  const filePath = path.join(process.cwd(), "content", `${section}.json`);
+  // ── Write ────────────────────────────────────────────────────────
   try {
-    fs.writeFileSync(filePath, JSON.stringify(body, null, 2) + "\n", "utf-8");
+    await setContent(section, body);
   } catch (err) {
-    console.error("Failed to write content file:", err);
+    console.error("Failed to write content:", err);
     return NextResponse.json(
       { error: "Failed to write content file" },
       { status: 500 }
@@ -70,4 +68,27 @@ export async function POST(
   }
 
   return NextResponse.json({ ok: true });
+}
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { section: string } }
+) {
+  const token = req.cookies.get(COOKIE_NAME)?.value;
+  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const payload = await verifyToken(token);
+  if (!payload) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { section } = params;
+  if (!isAllowed(section)) {
+    return NextResponse.json({ error: "Unknown section" }, { status: 400 });
+  }
+
+  try {
+    const content = await getContent(section);
+    return NextResponse.json(content);
+  } catch (err) {
+    console.error("Failed to read content:", err);
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
+  }
 }

@@ -1,9 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import content from "../../content/apps.json";
+import defaultContent from "../../content/apps.json";
 
-export default function AppUse() {
+type AppUseContent = typeof defaultContent;
+
+interface AppUseProps {
+  content?: AppUseContent;
+}
+
+export default function AppUse({ content = defaultContent }: AppUseProps) {
   return (
     <section id="apps" className="bg-[#f01e0e] pt-16 pb-8 px-5 lg:px-[120px] overflow-hidden">
       <div className="max-w-[1440px] mx-auto">

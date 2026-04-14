@@ -2,10 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import content from "../../content/hero.json";
+import defaultContent from "../../content/hero.json";
+
+type HeroContent = typeof defaultContent;
 
 interface HeroProps {
   onBookNow?: () => void;
+  content?: HeroContent;
 }
 
 const GRADIENT_STYLE = {
@@ -32,7 +35,7 @@ const childVariants = {
   },
 };
 
-export default function Hero({ onBookNow }: HeroProps) {
+export default function Hero({ onBookNow, content = defaultContent }: HeroProps) {
   return (
     <section className="relative h-screen w-full lg:h-[800px]">
       {/* Background image */}

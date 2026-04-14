@@ -3,11 +3,17 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import content from "../../content/ashgabat.json";
+import defaultContent from "../../content/ashgabat.json";
+
+type AshgabatContent = typeof defaultContent;
+
+interface AshgabatProps {
+  content?: AshgabatContent;
+}
 
 const DOT_COUNT = 5;
 
-export default function Ashgabat() {
+export default function Ashgabat({ content = defaultContent }: AshgabatProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
 

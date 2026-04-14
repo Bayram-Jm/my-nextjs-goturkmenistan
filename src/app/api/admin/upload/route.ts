@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { setDeep, getByPath } from "@/lib/jsonUtils";
 import imageSpecs from "../../../../../content/image-specs.json";
 import { normalizePathForSpec } from "@/lib/jsonUtils";
+import { getContent, setContent, uploadImage, deleteImage } from "@/lib/contentStore";
 
 /* ─── Constants ──────────────────────────────────────────────────────────── */
 const ALLOWED_SECTIONS = [
@@ -43,8 +42,6 @@ export async function POST(req: NextRequest) {
   const section = formData.get("section") as string | null;
   const fieldPath = formData.get("fieldPath") as string | null;
   const optimize = formData.get("optimize") === "true";
-  // skipSave=true: upload the file and return the path but do NOT update the
-  // content JSON or delete the old file. Used by the "add/edit card" modal.
   const skipSave = formData.get("skipSave") === "true";
 
   if (!file || !section || !fieldPath) {
@@ -86,32 +83,27 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  /* ── Read current content JSON to find old path ───────────────────────── */
-  const contentFilePath = path.join(process.cwd(), "content", `${section}.json`);
+  /* ── Read current content to find old image path ──────────────────────── */
   let currentContent: Record<string, unknown> = {};
   try {
-    currentContent = JSON.parse(fs.readFileSync(contentFilePath, "utf-8"));
+    currentContent = await getContent(section);
   } catch {
-    // Non-fatal — content file might not exist yet
+    // Non-fatal — content might not exist yet
   }
   const oldPath = getByPath(currentContent, fieldPath) as string | undefined;
 
   /* ── Determine output extension ───────────────────────────────────────── */
   const outExt = optimize ? "webp" : mimeExt;
+  const outContentType = optimize ? "image/webp" : file.type;
 
   /* ── Generate unique filename ─────────────────────────────────────────── */
   const ts = Date.now();
   const rand = Math.random().toString(36).slice(2, 7);
   const filename = `${ts}-${rand}.${outExt}`;
 
-  /* ── Ensure uploads directory exists ─────────────────────────────────── */
-  const uploadsDir = path.join(process.cwd(), "public", "uploads", section as AllowedSection);
-  fs.mkdirSync(uploadsDir, { recursive: true });
-
-  /* ── Process and save file ────────────────────────────────────────────── */
+  /* ── Process image buffer ─────────────────────────────────────────────── */
   const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const outPath = path.join(uploadsDir, filename);
+  let buffer = Buffer.from(bytes) as Buffer;
 
   if (optimize) {
     let sharpFn: ((buf: Buffer) => { webp: (opts: { quality: number }) => { toBuffer: () => Promise<Buffer> } }) | null = null;
@@ -119,40 +111,36 @@ export async function POST(req: NextRequest) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sharpFn = (await import("sharp")).default as any;
     } catch {
-      // sharp not available — fall back to saving original
+      // sharp not available — save original
     }
     if (sharpFn) {
-      const optimized = await sharpFn(buffer).webp({ quality: 85 }).toBuffer();
-      fs.writeFileSync(outPath, optimized);
-    } else {
-      fs.writeFileSync(outPath, buffer);
+      buffer = (await sharpFn(buffer).webp({ quality: 85 }).toBuffer()) as Buffer;
     }
-  } else {
-    fs.writeFileSync(outPath, buffer);
   }
 
-  /* ── Public path for the new file ────────────────────────────────────── */
-  const newPublicPath = `/uploads/${section}/${filename}`;
+  /* ── Upload image ─────────────────────────────────────────────────────── */
+  let newPublicPath: string;
+  try {
+    newPublicPath = await uploadImage(section as AllowedSection, filename, buffer, outContentType);
+  } catch (err) {
+    console.error("Failed to upload image:", err);
+    return NextResponse.json({ error: "Failed to upload image" }, { status: 500 });
+  }
 
   if (!skipSave) {
-    /* ── Update content JSON with new path ─────────────────────────────── */
+    /* ── Update content JSON with new image path ────────────────────────── */
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updated = setDeep(currentContent as any, fieldPath, newPublicPath);
-      fs.writeFileSync(contentFilePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+      await setContent(section, updated);
     } catch (err) {
       console.error("Failed to update content JSON:", err);
       // Return success anyway — image was saved, JSON update can be retried
     }
 
-    /* ── Delete old file if it was a previously uploaded file ──────────── */
-    if (oldPath && oldPath.startsWith("/uploads/")) {
-      const oldAbsPath = path.join(process.cwd(), "public", oldPath);
-      try {
-        if (fs.existsSync(oldAbsPath)) fs.unlinkSync(oldAbsPath);
-      } catch {
-        // Non-critical
-      }
+    /* ── Delete old image if it was a previously uploaded file ─────────── */
+    if (oldPath) {
+      await deleteImage(oldPath);
     }
   }
 

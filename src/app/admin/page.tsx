@@ -1,5 +1,5 @@
-import fs from "fs";
 import path from "path";
+import fs from "fs";
 import {
   LayoutGrid,
   ImageIcon,
@@ -8,6 +8,9 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
+import { getAllContent } from "@/lib/contentStore";
+
+export const dynamic = "force-dynamic";
 
 const SECTIONS = [
   { key: "hero",        label: "Hero",          href: "/admin/sections/hero" },
@@ -38,28 +41,48 @@ function countImagesInValue(val: unknown): number {
   return 0;
 }
 
-function getContentStats() {
-  const contentDir = path.join(process.cwd(), "content");
-  let totalImages = 0;
-  let latestMtime = new Date(0);
+export default async function AdminDashboard() {
+  /* ── Load content and compute stats ────────────────────────────────── */
+  const allContent = await getAllContent(SECTIONS.map((s) => s.key)).catch(() => ({}));
 
-  for (const section of SECTIONS) {
-    const filePath = path.join(contentDir, `${section.key}.json`);
-    try {
-      const stat = fs.statSync(filePath);
-      if (stat.mtime > latestMtime) latestMtime = stat.mtime;
-      const raw = fs.readFileSync(filePath, "utf-8");
-      totalImages += countImagesInValue(JSON.parse(raw));
-    } catch {
-      // File missing — skip
-    }
+  let totalImages = 0;
+  for (const c of Object.values(allContent)) {
+    totalImages += countImagesInValue(c);
   }
 
-  return { totalImages, latestMtime };
-}
+  /* ── Per-section modification times ────────────────────────────────── */
+  const sectionMtimes: Record<string, string | null> = {};
+  let latestMtime = new Date(0);
 
-export default function AdminDashboard() {
-  const { totalImages, latestMtime } = getContentStats();
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const { list } = await import("@vercel/blob");
+      const { blobs } = await list({ prefix: "content/", limit: 20 });
+      for (const blob of blobs) {
+        const section = blob.pathname
+          .replace(/^content\//, "")
+          .replace(/\.json$/, "");
+        const d = new Date(blob.uploadedAt);
+        sectionMtimes[section] = d.toLocaleDateString("en-GB", {
+          day: "2-digit", month: "short", year: "numeric",
+        });
+        if (d > latestMtime) latestMtime = d;
+      }
+    } catch { /* non-critical */ }
+  } else {
+    for (const section of SECTIONS) {
+      try {
+        const fp = path.join(process.cwd(), "content", `${section.key}.json`);
+        const stat = fs.statSync(fp);
+        sectionMtimes[section.key] = stat.mtime.toLocaleDateString("en-GB", {
+          day: "2-digit", month: "short", year: "numeric",
+        });
+        if (stat.mtime > latestMtime) latestMtime = stat.mtime;
+      } catch {
+        sectionMtimes[section.key] = null;
+      }
+    }
+  }
 
   const lastModifiedLabel =
     latestMtime.getTime() === 0
@@ -142,23 +165,7 @@ export default function AdminDashboard() {
 
         <div className="divide-y divide-[#f2eeee]">
           {SECTIONS.map((section) => {
-            const filePath = path.join(
-              process.cwd(),
-              "content",
-              `${section.key}.json`
-            );
-            let mtime: string | null = null;
-            try {
-              const stat = fs.statSync(filePath);
-              mtime = stat.mtime.toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              });
-            } catch {
-              // ignore
-            }
-
+            const mtime = sectionMtimes[section.key];
             return (
               <Link
                 key={section.key}

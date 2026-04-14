@@ -1,6 +1,12 @@
-import content from "../../content/paywithease.json";
+import defaultContent from "../../content/paywithease.json";
 
-export default function PayWithEase() {
+type PayWithEaseContent = typeof defaultContent;
+
+interface PayWithEaseProps {
+  content?: PayWithEaseContent;
+}
+
+export default function PayWithEase({ content = defaultContent }: PayWithEaseProps) {
   return (
     <section className="bg-[#faf5f5] py-20">
       <div className="px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">

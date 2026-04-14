@@ -1,45 +1,12 @@
-"use client";
+import { getAllContent } from "@/lib/contentStore";
+import HomeClient from "./HomeClient";
 
-import { useState } from "react";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Ashgabat from "@/components/Ashgabat";
-import Events from "@/components/Events";
-import Heritage from "@/components/Heritage";
-import Tours from "@/components/Tours";
-import Nature from "@/components/Nature";
-import Cuisine from "@/components/Cuisine";
-import PayWithEase from "@/components/PayWithEase";
-import BookTicket from "@/components/BookTicket";
-import AppUse from "@/components/AppUse";
-import Footer from "@/components/Footer";
-import MobileMenu from "@/components/MobileMenu";
+const SECTIONS = [
+  "hero", "ashgabat", "events", "heritage", "nature",
+  "cuisine", "paywithease", "tours", "apps", "footer",
+] as const;
 
-export default function Home() {
-  const [isBookOpen, setIsBookOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  return (
-    <main>
-      <Header
-        onMenuOpen={() => setIsMenuOpen(true)}
-        onBookNow={() => setIsBookOpen(true)}
-      />
-      <MobileMenu
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-      />
-      <Hero onBookNow={() => setIsBookOpen(true)} />
-      <Ashgabat />
-      <Events />
-      <Heritage />
-      <Nature />
-      <Cuisine />
-      <PayWithEase />
-      <Tours onBookNow={() => setIsBookOpen(true)} />
-      <BookTicket isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} />
-      <AppUse />
-      <Footer />
-    </main>
-  );
+export default async function Home() {
+  const content = await getAllContent(SECTIONS);
+  return <HomeClient content={content} />;
 }

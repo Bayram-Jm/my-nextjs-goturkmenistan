@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { z } from "zod";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { getByPath, setDeep } from "@/lib/jsonUtils";
 import type { JsonObject } from "@/lib/jsonUtils";
 import { CAROUSEL_CONFIG } from "@/lib/carouselConfig";
+import { getContent, setContent } from "@/lib/contentStore";
 
 const ALLOWED_SECTIONS = Object.keys(CAROUSEL_CONFIG);
 
@@ -42,13 +41,12 @@ export async function POST(
   }
   const { arrayPath, card } = parsed.data;
 
-  /* Read content file */
-  const filePath = path.join(process.cwd(), "content", `${section}.json`);
+  /* Read content */
   let content: JsonObject;
   try {
-    content = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    content = await getContent(section) as JsonObject;
   } catch {
-    return NextResponse.json({ error: "Content file not found" }, { status: 404 });
+    return NextResponse.json({ error: "Content not found" }, { status: 404 });
   }
 
   /* Get the array */
@@ -71,7 +69,6 @@ export async function POST(
     id: crypto.randomUUID(),
     ...(card as JsonObject),
   };
-  // If card already has a valid id, keep it
   if (typeof (card as JsonObject).id === "string" && (card as JsonObject).id) {
     newCard.id = (card as JsonObject).id as string;
   }
@@ -81,9 +78,9 @@ export async function POST(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updated = setDeep(content as any, arrayPath, newArray);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+    await setContent(section, updated);
   } catch (err) {
-    console.error("Failed to write content file:", err);
+    console.error("Failed to save:", err);
     return NextResponse.json({ error: "Failed to save" }, { status: 500 });
   }
 

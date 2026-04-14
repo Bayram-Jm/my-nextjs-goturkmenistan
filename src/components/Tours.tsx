@@ -3,13 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import content from "../../content/tours.json";
+import defaultContent from "../../content/tours.json";
+
+type ToursContent = typeof defaultContent;
 
 interface ToursProps {
   onBookNow?: () => void;
+  content?: ToursContent;
 }
 
-export default function Tours({ onBookNow }: ToursProps) {
+export default function Tours({ onBookNow, content = defaultContent }: ToursProps) {
   const [planOpen, setPlanOpen] = useState(false);
   const { tour } = content;
 

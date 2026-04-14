@@ -3,11 +3,16 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import content from "../../content/nature.json";
+import defaultContent from "../../content/nature.json";
 
-const DOT_COUNT = content.cards.length;
+type NatureContent = typeof defaultContent;
 
-export default function Nature() {
+interface NatureProps {
+  content?: NatureContent;
+}
+
+export default function Nature({ content = defaultContent }: NatureProps) {
+  const dotCount = content.cards.length;
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -17,8 +22,8 @@ export default function Nature() {
     if (!el) return;
     const maxScroll = el.scrollWidth - el.clientWidth;
     const progress = maxScroll > 0 ? el.scrollLeft / maxScroll : 0;
-    setActiveDot(Math.round(progress * (DOT_COUNT - 1)));
-  }, []);
+    setActiveDot(Math.round(progress * (dotCount - 1)));
+  }, [dotCount]);
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -40,7 +45,7 @@ export default function Nature() {
     const el = carouselRef.current;
     if (!el) return;
     const maxScroll = el.scrollWidth - el.clientWidth;
-    el.scrollTo({ left: (index / (DOT_COUNT - 1)) * maxScroll, behavior: "smooth" });
+    el.scrollTo({ left: (index / (dotCount - 1)) * maxScroll, behavior: "smooth" });
   };
 
   const selected = selectedId !== null ? content.cards[selectedId] : null;
@@ -89,7 +94,7 @@ export default function Nature() {
 
         {/* Pagination dots */}
         <div className="flex items-center justify-center gap-2 mt-8">
-          {Array.from({ length: DOT_COUNT }).map((_, i) => (
+          {Array.from({ length: dotCount }).map((_, i) => (
             <button
               key={i}
               onClick={() => scrollToDot(i)}

@@ -3,11 +3,17 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import content from "../../content/cuisine.json";
+import defaultContent from "../../content/cuisine.json";
+
+type CuisineContent = typeof defaultContent;
+
+interface CuisineProps {
+  content?: CuisineContent;
+}
 
 const DOT_COUNT = 5;
 
-export default function Cuisine() {
+export default function Cuisine({ content = defaultContent }: CuisineProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);

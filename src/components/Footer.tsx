@@ -1,6 +1,12 @@
-import content from "../../content/footer.json";
+import defaultContent from "../../content/footer.json";
 
-export default function Footer() {
+type FooterContent = typeof defaultContent;
+
+interface FooterProps {
+  content?: FooterContent;
+}
+
+export default function Footer({ content = defaultContent }: FooterProps) {
   return (
     <footer className="bg-[#100706] border-t border-[#434343] py-16">
       <div className="max-w-[1200px] mx-auto px-5 lg:px-[120px]">
