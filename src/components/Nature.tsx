@@ -3,26 +3,9 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import content from "../../content/nature.json";
 
-const natureCards = [
-  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-1.png" },
-  { name: "Yangygala",                 location: "Canyon Yangygala/Balkan",  image: "/images/nature-2.png" },
-  { name: "Koytendag Mountains",       location: "Koytendag/Lebap",          image: "/images/nature-3.png" },
-  { name: "Foothills of the Kopetdag", location: "Mountains Kopetdag/Ahal",  image: "/images/nature-4.png" },
-  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-5.png" },
-  { name: "The Fire Gate of Darvaza",  location: "Desert Karakum/Ahal",      image: "/images/nature-6.png" },
-  { name: "Craters in the desert",     location: "Desert Karakum/Ahal",      image: "/images/nature-7.png" },
-  { name: "Health Path",               location: "Mountains Kopetdag/Ahal",  image: "/images/nature-8.png" },
-  { name: "Kov Ata Cave",              location: "Mountains Kopetdag/Ahal",  image: "/images/nature-9.png" },
-  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-10.png" },
-  { name: "Desert Karakum",            location: "Karakum/Ahal",             image: "/images/nature-11.png" },
-  { name: "Camp in Karakum",           location: "Karakum/Ahal",             image: "/images/nature-12.png" },
-  { name: "Khauz-Khan Lakes",          location: "Mary",                     image: "/images/nature-13.png" },
-  { name: "Nokhur Valley",             location: "Nokhur/Ahal",              image: "/images/nature-14.png" },
-  { name: "Avaza",                     location: "Caspian Sea/Balkan",       image: "/images/nature-15.png" },
-];
-
-const DOT_COUNT = natureCards.length;
+const DOT_COUNT = content.cards.length;
 
 export default function Nature() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -60,26 +43,24 @@ export default function Nature() {
     el.scrollTo({ left: (index / (DOT_COUNT - 1)) * maxScroll, behavior: "smooth" });
   };
 
-  const selected = selectedId !== null ? natureCards[selectedId] : null;
+  const selected = selectedId !== null ? content.cards[selectedId] : null;
 
   return (
     <section id="nature" className="bg-[#faf5f5] py-16 overflow-hidden">
       {/* Header */}
       <div className="px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">
         <h2 className="font-righteous uppercase text-[#100706] text-[34px] leading-[1.1] lg:text-[72px] lg:leading-[0.94] lg:max-w-[640px]">
-          THE LAND BEFORE TOURISM
+          {content.sectionTitle}
         </h2>
         <p className="font-inter text-base text-[#524442] leading-[1.6] max-w-[640px] mt-4">
-          Turkmenistan doesn&apos;t choose one landscape — it claims them all.
-          Burning deserts, snow-capped peaks, a glittering sea, endless steppe,
-          and wildlife that roams free. All within one border. All waiting.
+          {content.description}
         </p>
       </div>
 
       {/* Nature Cards Carousel */}
       <div className="mt-10">
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 lg:gap-3 carousel-pl snap-x snap-mandatory">
-          {natureCards.map((card, index) => (
+          {content.cards.map((card, index) => (
             <motion.div
               key={index}
               layoutId={`nature-card-${index}`}

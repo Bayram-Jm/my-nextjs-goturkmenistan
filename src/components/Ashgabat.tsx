@@ -3,22 +3,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
+import content from "../../content/ashgabat.json";
 
 const DOT_COUNT = 5;
-
-const images = [
-  { src: "/images/ashgabat-1.jpg",  label: "Sunset in Ashgabat" },
-  { src: "/images/ashgabat-2.png",  label: "Sunset in Ashgabat" },
-  { src: "/images/ashgabat-3.png",  label: "Holiday in Ashgabat" },
-  { src: "/images/ashgabat-4.png",  label: "Independence Park" },
-  { src: "/images/ashgabat-5.png",  label: "Independence Monument" },
-  { src: "/images/ashgabat-6.png",  label: "Indoor Ferris wheel" },
-  { src: "/images/ashgabat-7.png",  label: "Hotel Ashgabat" },
-  { src: "/images/ashgabat-8.png",  label: "Hotel Yyldyz" },
-  { src: "/images/ashgabat-9.png",  label: "Wedding House" },
-  { src: "/images/ashgabat-10.png", label: "Monument to Neutrality" },
-  { src: "/images/ashgabat-11.png", label: "Indoor Ferris wheel" },
-];
 
 export default function Ashgabat() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -58,14 +45,14 @@ export default function Ashgabat() {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#100706] leading-[1.1] lg:leading-[0.94]">
-          White Marble Magic
+          {content.sectionTitle}
         </h2>
       </motion.div>
 
       {/* Carousel */}
       <div className="mt-10">
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 carousel-pl snap-x snap-mandatory">
-          {images.map((img, index) => (
+          {content.images.map((img, index) => (
             <div
               key={index}
               className="relative flex-shrink-0 w-[280px] h-[420px] lg:w-[344px] lg:h-[537px] rounded-[20px] overflow-hidden snap-start"

@@ -1,13 +1,14 @@
+import content from "../../content/paywithease.json";
+
 export default function PayWithEase() {
   return (
     <section className="bg-[#faf5f5] py-20">
       <div className="px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">
         <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#100706] leading-[0.94]">
-          PAY WITH EASE
+          {content.sectionTitle}
         </h2>
         <p className="font-inter text-base text-[#524442] leading-[1.6] max-w-[591px] mt-4">
-          Visa and Mastercard are accepted across Turkmenistan — hotels,
-          restaurants, shops, and tour services.
+          {content.description}
         </p>
 
         {/* Payment Cards */}

@@ -1,0 +1,19 @@
+{
+  "titleLeft": "LOCAL SOUL",
+  "titleRight": "WORLD KITCHEN",
+  "description": "From slow-cooked lamb in desert camps to international cuisine in marble Ashgabat — Turkmenistan feeds both the body and the soul.",
+  "videoThumbnail": "/images/cuisine-video.png",
+  "videoSrc": "/videos/kitchen.mp4",
+  "mustTryLabel": "Must-Try Dishes",
+  "creditRestaurant": "TOR",
+  "dishes": [
+    { "name": "Autumn Velvet", "label": "National dish", "image": "/images/dish-1.jpg" },
+    { "name": "Yarma",         "label": "National dish", "image": "/images/dish-2.png" },
+    { "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-3.png" },
+    { "name": "Gowurma",       "label": "National dish", "image": "/images/dish-4.png" },
+    { "name": "Salad",         "label": "National dish", "image": "/images/dish-5.png" },
+    { "name": "Unash",         "label": "National dish", "image": "/images/dish-6.png" },
+    { "name": "Somsa",         "label": "National dish", "image": "/images/dish-7.png" },
+    { "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-8.png" }
+  ]
+}

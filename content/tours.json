@@ -1,0 +1,33 @@
+{
+  "sectionTitle": "BOOK. EXPLORE.",
+  "subtitle": "Discover our most popular journey through Turkmenistan.",
+  "featuredImage": "/images/tour-featured.jpg",
+  "tour": {
+    "badge": "Most Popular",
+    "title": "3 days with Nokhur",
+    "description": "A 3-day adventure from the Nokhur through the ancient ruins, ending in the marble city of Ashgabat.",
+    "cardImage": "/images/tour-card.png",
+    "duration": "3 Days",
+    "route": "Ashgabat - Nokhur - Ashgabat",
+    "price": "$350",
+    "priceLabel": "Starting from",
+    "priceNote": "per person",
+    "plan": [
+      {
+        "day": "Day 1",
+        "title": "Ashgabat",
+        "desc": "City tour covering the main highlights: Ancient Nissa (UNESCO), Turkmenbashi Mosque, Earthquake Memorial, Independence Park, Arch of Neutrality, Wedding Palace and the National Museum."
+      },
+      {
+        "day": "Day 2",
+        "title": "Nokhur & Kow-ata",
+        "desc": "Drive to Nokhur village → ancient Chynar tree → Kiz Bibi shrine in the mountains (ancient decorated graves along the way). After lunch, head back to Ashgabat → swim in the Kow-ata underground lake → Geokdepe Mosque."
+      },
+      {
+        "day": "Day 3",
+        "title": "Ashgabat",
+        "desc": "Carpet Museum, Alley of Inspiration, Ertogrul Ghazi Mosque, Art Gallery, Berkarar Shopping Mall and Akhal-Teke horse stable."
+      }
+    ]
+  }
+}

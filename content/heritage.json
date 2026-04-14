@@ -1,0 +1,14 @@
+{
+  "sectionTitle": "WEAR THE PAST WALK THROUGH IT",
+  "subheading": "Unforgettable Experiences",
+  "description": "Turkmenistan's heritage is a living tapestry of ancient traditions, from the intricate patterns of hand-woven carpets to the timeless architecture of Silk Road caravanserais. Step into a world where the past walks beside you.",
+  "mainImage": "/images/heritage-main.png",
+  "sites": [
+    { "name": "Dayahatyn",       "image": "/images/story-1.png" },
+    { "name": "Merw",            "image": "/images/story-2.png" },
+    { "name": "Koneurgench",     "image": "/images/story-3.png" },
+    { "name": "Astanababa",      "image": "/images/story-4.png" },
+    { "name": "Seyitjemalledin", "image": "/images/story-5.png" },
+    { "name": "Abiwerd",         "image": "/images/story-6.png" }
+  ]
+}

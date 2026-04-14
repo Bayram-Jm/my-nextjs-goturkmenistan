@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import content from "../../content/hero.json";
 
 interface HeroProps {
   onBookNow?: () => void;
@@ -36,7 +37,7 @@ export default function Hero({ onBookNow }: HeroProps) {
     <section className="relative h-screen w-full lg:h-[800px]">
       {/* Background image */}
       <img
-        src="/images/hero.jpg"
+        src={content.backgroundImage}
         alt="Turkmenistan landscape"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
@@ -61,14 +62,14 @@ export default function Hero({ onBookNow }: HeroProps) {
           variants={childVariants}
           className="w-[215px] font-righteous text-[34px] leading-none text-[#faf5f5] lg:w-auto lg:max-w-[747px] lg:uppercase lg:text-[84px] lg:leading-[0.94] lg:tracking-[-1.5px]"
         >
-          Welcome to Turkmenistan
+          {content.heading}
         </motion.h1>
 
         <motion.p
           variants={childVariants}
           className="mt-[18px] max-w-[215px] font-inter text-base text-[#faf5f5] lg:max-w-none lg:mt-6 lg:text-xl"
         >
-          World&apos;s last great undiscovered destination
+          {content.subheading}
         </motion.p>
 
         <motion.button
@@ -78,7 +79,7 @@ export default function Hero({ onBookNow }: HeroProps) {
           style={GRADIENT_STYLE}
           className="mt-[38px] cursor-pointer rounded-lg px-5 py-3.5 font-righteous text-sm uppercase tracking-[0.28px] text-white transition-opacity hover:opacity-90 lg:mt-6 lg:px-9 lg:py-4 lg:text-base"
         >
-          Book Your Ticket &rarr;
+          {content.buttonText}
         </motion.button>
       </motion.div>
     </section>

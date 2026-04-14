@@ -3,24 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-
-const tourPlan = [
-  {
-    day: "Day 1",
-    title: "Ashgabat",
-    desc: "City tour covering the main highlights: Ancient Nissa (UNESCO), Turkmenbashi Mosque, Earthquake Memorial, Independence Park, Arch of Neutrality, Wedding Palace and the National Museum.",
-  },
-  {
-    day: "Day 2",
-    title: "Nokhur & Kow-ata",
-    desc: "Drive to Nokhur village → ancient Chynar tree → Kiz Bibi shrine in the mountains (ancient decorated graves along the way). After lunch, head back to Ashgabat → swim in the Kow-ata underground lake → Geokdepe Mosque.",
-  },
-  {
-    day: "Day 3",
-    title: "Ashgabat",
-    desc: "Carpet Museum, Alley of Inspiration, Ertogrul Ghazi Mosque, Art Gallery, Berkarar Shopping Mall and Akhal-Teke horse stable.",
-  },
-];
+import content from "../../content/tours.json";
 
 interface ToursProps {
   onBookNow?: () => void;
@@ -28,6 +11,7 @@ interface ToursProps {
 
 export default function Tours({ onBookNow }: ToursProps) {
   const [planOpen, setPlanOpen] = useState(false);
+  const { tour } = content;
 
   return (
     <section id="tours">
@@ -39,7 +23,7 @@ export default function Tours({ onBookNow }: ToursProps) {
         {/* Featured image — centred */}
         <div className="absolute left-1/2 -translate-x-1/2 top-[40px] lg:top-[60px] w-[280px] h-[360px] lg:w-[353px] lg:h-[441px] rounded-[20px] overflow-hidden">
           <Image
-            src="/images/tour-featured.jpg"
+            src={content.featuredImage}
             alt="Tour featured"
             fill
             className="object-cover"
@@ -53,7 +37,7 @@ export default function Tours({ onBookNow }: ToursProps) {
                      lg:text-[72px] lg:leading-[52.8px] lg:-bottom-[27px]"
           style={{ left: "max(20px, calc((100vw - 1440px) / 2 + 120px))" }}
         >
-          BOOK. EXPLORE.
+          {content.sectionTitle}
         </h2>
       </div>
 
@@ -68,13 +52,13 @@ export default function Tours({ onBookNow }: ToursProps) {
                      lg:text-[72px] lg:leading-[52.8px] lg:-top-[27px]"
           style={{ left: "max(20px, calc((100vw - 1440px) / 2 + 120px))" }}
         >
-          BOOK. EXPLORE.
+          {content.sectionTitle}
         </h2>
 
         {/* Content */}
         <div className="max-w-[1440px] mx-auto px-5 lg:px-[120px]">
           <p className="font-inter text-base text-[#524442] mb-8">
-            Discover our most popular journey through Turkmenistan.
+            {content.subtitle}
           </p>
 
           {/* Tour Card */}
@@ -83,8 +67,8 @@ export default function Tours({ onBookNow }: ToursProps) {
             {/* Image */}
             <div className="w-full lg:w-[500px] h-[240px] lg:h-[480px] relative flex-shrink-0">
               <Image
-                src="/images/tour-card.png"
-                alt="3 days with Nokhur"
+                src={tour.cardImage}
+                alt={tour.title}
                 fill
                 className="object-cover"
               />
@@ -95,18 +79,17 @@ export default function Tours({ onBookNow }: ToursProps) {
 
               {/* Badge */}
               <span className="inline-block self-start bg-[#f01e0e] text-white font-redhat text-[11px] font-bold uppercase tracking-[0.5px] px-3 py-1 rounded">
-                Most Popular
+                {tour.badge}
               </span>
 
               {/* Title */}
               <h3 className="font-righteous text-2xl lg:text-[32px] text-[#100706] mt-4">
-                3 days with Nokhur
+                {tour.title}
               </h3>
 
               {/* Description */}
               <p className="font-inter text-base text-[#524442] leading-[1.5] mt-2 max-w-[570px]">
-                A 3-day adventure from the Nokhur through the ancient ruins,
-                ending in the marble city of Ashgabat.
+                {tour.description}
               </p>
 
               {/* Read more */}
@@ -121,11 +104,11 @@ export default function Tours({ onBookNow }: ToursProps) {
               <div className="flex flex-col gap-2 mt-4">
                 <div className="flex items-center gap-1.5">
                   <span className="text-base">🕐</span>
-                  <span className="font-inter text-base text-[#524442]">3 Days</span>
+                  <span className="font-inter text-base text-[#524442]">{tour.duration}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-base">📍</span>
-                  <span className="font-inter text-base text-[#524442]">Ashgabat - Nokhur - Ashgabat</span>
+                  <span className="font-inter text-base text-[#524442]">{tour.route}</span>
                 </div>
               </div>
 
@@ -136,12 +119,12 @@ export default function Tours({ onBookNow }: ToursProps) {
               <div className="flex items-end justify-between">
                 <div>
                   <span className="font-inter text-xs text-[#524442] uppercase tracking-[0.5px]">
-                    Starting from
+                    {tour.priceLabel}
                   </span>
                   <div className="font-righteous text-[28px] lg:text-[36px] text-[#100706]">
-                    $350
+                    {tour.price}
                   </div>
-                  <span className="font-inter text-xs text-[#524442]">per person</span>
+                  <span className="font-inter text-xs text-[#524442]">{tour.priceNote}</span>
                 </div>
                 <button
                   onClick={onBookNow}
@@ -190,7 +173,7 @@ export default function Tours({ onBookNow }: ToursProps) {
                 <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-[rgba(67,67,67,0.4)]">
                   <div>
                     <span className="block font-redhat text-[11px] font-bold uppercase tracking-[1.2px] text-[rgba(250,245,245,0.45)] mb-1">
-                      3 Days with Nokhur
+                      {tour.title}
                     </span>
                     <h3 className="font-righteous text-[22px] text-[#faf5f5] uppercase">
                       Tour Plan
@@ -209,7 +192,7 @@ export default function Tours({ onBookNow }: ToursProps) {
 
                 {/* Days */}
                 <div className="px-8 py-6 flex flex-col gap-6">
-                  {tourPlan.map((item, i) => (
+                  {tour.plan.map((item, i) => (
                     <div key={i} className="flex gap-5">
                       {/* Day indicator */}
                       <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
@@ -217,7 +200,7 @@ export default function Tours({ onBookNow }: ToursProps) {
                           style={{ background: "linear-gradient(90deg, #e93725 12%, #e938c9 100%)" }}>
                           {i + 1}
                         </div>
-                        {i < tourPlan.length - 1 && (
+                        {i < tour.plan.length - 1 && (
                           <div className="w-px flex-1 mt-2 bg-[rgba(67,67,67,0.5)]" />
                         )}
                       </div>

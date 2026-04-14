@@ -3,17 +3,7 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-const dishes = [
-  { name: "Autumn Velvet", label: "National dish", image: "/images/dish-1.jpg" },
-  { name: "Yarma",         label: "National dish", image: "/images/dish-2.png" },
-  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-3.png" },
-  { name: "Gowurma",       label: "National dish", image: "/images/dish-4.png" },
-  { name: "Salad",         label: "National dish", image: "/images/dish-5.png" },
-  { name: "Unash",         label: "National dish", image: "/images/dish-6.png" },
-  { name: "Somsa",         label: "National dish", image: "/images/dish-7.png" },
-  { name: "Towuk chorba",  label: "National dish", image: "/images/dish-8.png" },
-];
+import content from "../../content/cuisine.json";
 
 const DOT_COUNT = 5;
 
@@ -72,14 +62,13 @@ export default function Cuisine() {
       {/* Header */}
       <div className="px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">
         <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#faf5f5] leading-[0.94] text-left">
-          LOCAL SOUL
+          {content.titleLeft}
         </h2>
         <h2 className="font-righteous text-[34px] lg:text-[72px] uppercase text-[#faf5f5] leading-[0.94] text-right">
-          WORLD KITCHEN
+          {content.titleRight}
         </h2>
         <p className="font-inter text-base text-[#faf5f5] leading-[1.6] max-w-[558px] mx-auto text-center mt-6">
-          From slow-cooked lamb in desert camps to international cuisine in
-          marble Ashgabat — Turkmenistan feeds both the body and the soul.
+          {content.description}
         </p>
       </div>
 
@@ -87,7 +76,7 @@ export default function Cuisine() {
       <div className="mt-10 flex justify-center px-5 lg:px-[120px] max-w-[1440px] lg:mx-auto">
         <div
           className="w-[353px] lg:w-[384px] h-[416px] lg:h-[503px] rounded-[20px] relative overflow-hidden bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/cuisine-video.png')" }}
+          style={{ backgroundImage: `url('${content.videoThumbnail}')` }}
         >
           <div className="absolute inset-0 flex items-center justify-center">
             <button
@@ -105,10 +94,10 @@ export default function Cuisine() {
       {/* Dish Cards Carousel */}
       <div className="mt-10">
         <div className="px-5 lg:hidden">
-          <h3 className="font-righteous text-2xl text-[#faf5f5] mb-4">Must-Try Dishes</h3>
+          <h3 className="font-righteous text-2xl text-[#faf5f5] mb-4">{content.mustTryLabel}</h3>
         </div>
         <div ref={carouselRef} className="flex gap-3.5 overflow-x-auto scrollbar-hide carousel-pl snap-x snap-mandatory">
-          {dishes.map((dish, index) => (
+          {content.dishes.map((dish, index) => (
             <motion.div
               key={index}
               layoutId={`dish-card-${index}`}
@@ -147,10 +136,11 @@ export default function Cuisine() {
         <ul className="list-disc">
           <li className="font-inter text-base text-[#524442]">
             We thank the restaurant of national cuisine{" "}
-            <span className="underline text-[#faf5f5]">TOR</span> for the provided food photographs.
+            <span className="underline text-[#faf5f5]">{content.creditRestaurant}</span> for the provided food photographs.
           </li>
         </ul>
       </div>
+
       {/* ── Dish Expanded Modal ── */}
       <AnimatePresence>
         {selectedDish !== null && (
@@ -169,7 +159,7 @@ export default function Cuisine() {
                 className="pointer-events-auto w-full max-w-[360px] bg-[#1a0c0b] rounded-[20px] overflow-hidden"
               >
                 <motion.div layoutId={`dish-image-${selectedDish}`} className="relative w-full h-[320px]">
-                  <Image src={dishes[selectedDish].image} alt={dishes[selectedDish].name} fill className="object-cover" sizes="360px" />
+                  <Image src={content.dishes[selectedDish].image} alt={content.dishes[selectedDish].name} fill className="object-cover" sizes="360px" />
                   <motion.button
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -184,7 +174,7 @@ export default function Cuisine() {
                 </motion.div>
                 <div className="px-6 py-5">
                   <motion.span layoutId={`dish-name-${selectedDish}`} className="font-righteous text-[22px] text-[#faf5f5] block">
-                    {dishes[selectedDish].name}
+                    {content.dishes[selectedDish].name}
                   </motion.span>
                   <motion.span
                     initial={{ opacity: 0 }}
@@ -192,7 +182,7 @@ export default function Cuisine() {
                     exit={{ opacity: 0 }}
                     className="font-inter text-sm text-[#524442] mt-1 block"
                   >
-                    {dishes[selectedDish].label}
+                    {content.dishes[selectedDish].label}
                   </motion.span>
                 </div>
               </motion.div>
@@ -236,7 +226,7 @@ export default function Cuisine() {
                 {/* Video */}
                 <video
                   ref={videoRef}
-                  src="/videos/kitchen.mp4"
+                  src={content.videoSrc}
                   autoPlay
                   playsInline
                   className="w-full rounded-[16px] object-cover max-h-[80vh]"

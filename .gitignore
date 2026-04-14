@@ -33,3 +33,10 @@ yarn-error.log*
 next-env.d.ts
 
 /.claude/
+
+# uploads (keep folder, ignore files)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# runtime auth store (contains password hash — never commit)
+/content/.auth.json

@@ -3,86 +3,7 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-const events = [
-  {
-    title: "Getting to Know Akhal-Teke Horses",
-    category: "Sport",
-    location: "Ashgabat - Ipadrom",
-    time: "09 April 8:00 PM",
-    image: "/images/event-new-1.jpg",
-  },
-  {
-    title: "Turkmen Fashion Evenings",
-    category: "Fashion",
-    location: "Ashgabat - Gulzemin",
-    time: "15 May 12:00–20 PM",
-    image: "/images/event-new-2.jpg",
-  },
-  {
-    title: "World Of Dolls And Toys",
-    category: "Exhibition",
-    location: "Ashgabat - Shopping center Bagtyyarlyk",
-    time: "21 May 12:00–20 PM",
-    image: "/images/event-new-3.jpg",
-  },
-  {
-    title: "Symphone Orchestra Under Resul Kylychev",
-    category: "Orchestra",
-    location: "Ashgabat - Shopping center Bagtyyarlyk",
-    time: "21 May 12:00–20 PM",
-    image: "/images/event-new-4.jpg",
-  },
-  {
-    title: "Symphone Orchestra Under Tahir Atayev",
-    category: "Orchestra",
-    location: "Ashgabat - Shopping center Bagtyyarlyk",
-    time: "26 March 19:00 PM",
-    image: "/images/event-new-5.jpg",
-  },
-  {
-    title: "Exhibition, Kakageldi Gurbangeldieva",
-    category: "Exhibition",
-    location: "Ashgabat - Academy of Arts of Turkmenistan",
-    time: "26 March 19:00 PM",
-    image: "/images/event-new-6.jpg",
-  },
-  {
-    title: 'Concert "Selected" Orchestra Tahir Atyeva',
-    category: "Orchestra",
-    location: "Magtymguly Musical and Drama Theater",
-    time: "26 March 19:00 PM",
-    image: "/images/event-new-7.jpg",
-  },
-  {
-    title: "Korean Culture Week",
-    category: "Culture",
-    location: `Ashgabat - Shopping center "Arkach"`,
-    time: "03 October 19:00 PM",
-    image: "/images/event-new-8.jpg",
-  },
-  {
-    title: 'Exhibition "Contemporary Art of Central Asia"',
-    category: "Exhibition",
-    location: "Ashgabat - Academy of Arts of Turkmenistan",
-    time: "June – September 09:00 AM",
-    image: "/images/event-new-9.jpg",
-  },
-  {
-    title: "Indian Dance and Music",
-    category: "Dance",
-    location: "Ashgabat - VATAN Cinema and Concert Hall",
-    time: "02 June – 15:00 PM",
-    image: "/images/event-new-10.jpg",
-  },
-  {
-    title: "Turkmen Fashion Evenings",
-    category: "Fashion",
-    location: "Ashgabat - Gulzemin",
-    time: "15 July 19:00–20:00 PM",
-    image: "/images/event-new-11.jpg",
-  },
-];
+import content from "../../content/events.json";
 
 const DOT_COUNT = 3;
 
@@ -122,17 +43,17 @@ export default function Events() {
     el.scrollTo({ left: (index / (DOT_COUNT - 1)) * maxScroll, behavior: "smooth" });
   };
 
-  const selected = selectedId !== null ? events[selectedId] : null;
+  const selected = selectedId !== null ? content.events[selectedId] : null;
 
   return (
     <section id="events" className="bg-[#100706] py-[60px]">
       {/* Header */}
       <div className="max-w-[1440px] mx-auto px-5 lg:px-[120px] mb-10">
         <h2 className="font-righteous uppercase text-[#faf5f5] text-[34px] leading-[1.1] lg:text-[78px] lg:leading-normal">
-          EVENTS NOT TO MISS
+          {content.sectionTitle}
         </h2>
         <p className="font-inter text-[16px] text-[rgba(250,245,245,0.7)] leading-[1.6] max-w-[457px] mt-4">
-          Discover the vibrant culture and traditions of Turkmenistan through its most exciting events
+          {content.sectionSubtitle}
         </p>
       </div>
 
@@ -142,7 +63,7 @@ export default function Events() {
         className="flex overflow-x-auto scrollbar-hide gap-2 snap-x snap-mandatory lg:pl-[120px]"
         style={{ paddingLeft: "max(20px, calc((100vw - 1440px) / 2 + 20px))", scrollPaddingLeft: "max(20px, calc((100vw - 1440px) / 2 + 20px))" }}
       >
-        {events.map((event, index) => (
+        {content.events.map((event, index) => (
           <motion.div
             key={index}
             layoutId={`event-card-${index}`}

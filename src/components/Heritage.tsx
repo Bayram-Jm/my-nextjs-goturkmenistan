@@ -3,23 +3,14 @@
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import content from "../../content/heritage.json";
 
-const stories = [
-  { name: "Dayahatyn",       image: "/images/story-1.png" },
-  { name: "Merw",            image: "/images/story-2.png" },
-  { name: "Koneurgench",     image: "/images/story-3.png" },
-  { name: "Astanababa",      image: "/images/story-4.png" },
-  { name: "Seyitjemalledin", image: "/images/story-5.png" },
-  { name: "Abiwerd",         image: "/images/story-6.png" },
-];
-
-const DOT_COUNT = stories.length;
+const DOT_COUNT = content.sites.length;
 
 export default function Heritage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeDot, setActiveDot] = useState(0);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-
 
   const handleScroll = useCallback(() => {
     const el = carouselRef.current;
@@ -52,7 +43,7 @@ export default function Heritage() {
     el.scrollTo({ left: (index / (DOT_COUNT - 1)) * maxScroll, behavior: "smooth" });
   };
 
-  const selected = selectedId !== null ? stories[selectedId] : null;
+  const selected = selectedId !== null ? content.sites[selectedId] : null;
 
   return (
     <section id="heritage" className="bg-[#f01e0e] py-16 overflow-hidden">
@@ -61,20 +52,18 @@ export default function Heritage() {
         <div className="flex flex-col lg:flex-row lg:justify-between">
           <div className="lg:max-w-[639px]">
             <h2 className="font-righteous uppercase text-[#faf5f5] text-[34px] leading-[0.94] lg:text-[72px]">
-              WEAR THE PAST WALK THROUGH IT
+              {content.sectionTitle}
             </h2>
             <div className="lg:hidden mt-8 w-full h-[441px] rounded-[20px] overflow-hidden relative">
-              <Image src="/images/heritage-main.png" alt="Heritage" fill className="object-cover" />
+              <Image src={content.mainImage} alt="Heritage" fill className="object-cover" />
             </div>
-            <p className="font-righteous text-2xl text-[#faf5f5] mt-10">Unforgettable Experiences</p>
+            <p className="font-righteous text-2xl text-[#faf5f5] mt-10">{content.subheading}</p>
             <p className="font-inter text-base text-[rgba(250,245,245,0.85)] leading-[1.6] max-w-[571px] mt-4">
-              Turkmenistan&apos;s heritage is a living tapestry of ancient traditions, from the intricate
-              patterns of hand-woven carpets to the timeless architecture of Silk Road caravanserais.
-              Step into a world where the past walks beside you.
+              {content.description}
             </p>
           </div>
           <div className="hidden lg:block w-[384px] h-[423px] rounded-[20px] overflow-hidden relative flex-shrink-0">
-            <Image src="/images/heritage-main.png" alt="Heritage" fill className="object-cover" />
+            <Image src={content.mainImage} alt="Heritage" fill className="object-cover" />
           </div>
         </div>
       </div>
@@ -82,7 +71,7 @@ export default function Heritage() {
       {/* Heritage Story Carousel */}
       <div className="mt-12">
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 lg:gap-6 carousel-pl snap-x snap-mandatory">
-          {stories.map((story, index) => (
+          {content.sites.map((story, index) => (
             <motion.div
               key={index}
               layoutId={`heritage-card-${index}`}

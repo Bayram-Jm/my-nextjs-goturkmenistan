@@ -1,0 +1,21 @@
+{
+  "sectionTitle": "THE LAND BEFORE TOURISM",
+  "description": "Turkmenistan doesn't choose one landscape — it claims them all. Burning deserts, snow-capped peaks, a glittering sea, endless steppe, and wildlife that roams free. All within one border. All waiting.",
+  "cards": [
+    { "name": "Yangygala",                 "location": "Canyon Yangygala/Balkan",  "image": "/images/nature-1.png" },
+    { "name": "Yangygala",                 "location": "Canyon Yangygala/Balkan",  "image": "/images/nature-2.png" },
+    { "name": "Koytendag Mountains",       "location": "Koytendag/Lebap",          "image": "/images/nature-3.png" },
+    { "name": "Foothills of the Kopetdag", "location": "Mountains Kopetdag/Ahal",  "image": "/images/nature-4.png" },
+    { "name": "The Fire Gate of Darvaza",  "location": "Desert Karakum/Ahal",      "image": "/images/nature-5.png" },
+    { "name": "The Fire Gate of Darvaza",  "location": "Desert Karakum/Ahal",      "image": "/images/nature-6.png" },
+    { "name": "Craters in the desert",     "location": "Desert Karakum/Ahal",      "image": "/images/nature-7.png" },
+    { "name": "Health Path",               "location": "Mountains Kopetdag/Ahal",  "image": "/images/nature-8.png" },
+    { "name": "Kov Ata Cave",              "location": "Mountains Kopetdag/Ahal",  "image": "/images/nature-9.png" },
+    { "name": "Desert Karakum",            "location": "Karakum/Ahal",             "image": "/images/nature-10.png" },
+    { "name": "Desert Karakum",            "location": "Karakum/Ahal",             "image": "/images/nature-11.png" },
+    { "name": "Camp in Karakum",           "location": "Karakum/Ahal",             "image": "/images/nature-12.png" },
+    { "name": "Khauz-Khan Lakes",          "location": "Mary",                     "image": "/images/nature-13.png" },
+    { "name": "Nokhur Valley",             "location": "Nokhur/Ahal",              "image": "/images/nature-14.png" },
+    { "name": "Avaza",                     "location": "Caspian Sea/Balkan",       "image": "/images/nature-15.png" }
+  ]
+}

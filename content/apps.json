@@ -1,0 +1,18 @@
+{
+  "sectionTitle": "Recommended for use in Ashgabat",
+  "subtitle": "An app that will make your travel easier.",
+  "apps": [
+    {
+      "name": "Online taxi",
+      "description": "To call a taxi.",
+      "icon": "/images/app-taxi-icon.png",
+      "screenshot": "/images/app-taxi-screen.png"
+    },
+    {
+      "name": "Gerekli",
+      "description": "For food delivery.",
+      "icon": "/images/app-geliber-icon.png",
+      "screenshot": "/images/app-geliber-scree.png"
+    }
+  ]
+}

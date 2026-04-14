@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "backgroundImage": {
+      "recommendedWidth": 1920,
+      "recommendedHeight": 1080,
+      "maxFileSizeMB": 5,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Full-screen hero banner (landscape)"
+    }
+  },
+  "ashgabat": {
+    "images.*.src": {
+      "recommendedWidth": 900,
+      "recommendedHeight": 600,
+      "maxFileSizeMB": 3,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Carousel photo (landscape 3:2)"
+    }
+  },
+  "events": {
+    "events.*.image": {
+      "recommendedWidth": 600,
+      "recommendedHeight": 400,
+      "maxFileSizeMB": 2,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Event card image (landscape 3:2)"
+    }
+  },
+  "heritage": {
+    "mainImage": {
+      "recommendedWidth": 1440,
+      "recommendedHeight": 900,
+      "maxFileSizeMB": 5,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Main feature image (landscape 16:10)"
+    },
+    "sites.*.image": {
+      "recommendedWidth": 400,
+      "recommendedHeight": 300,
+      "maxFileSizeMB": 2,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Heritage site thumbnail (landscape 4:3)"
+    }
+  },
+  "nature": {
+    "cards.*.image": {
+      "recommendedWidth": 800,
+      "recommendedHeight": 600,
+      "maxFileSizeMB": 3,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Nature destination card (landscape 4:3)"
+    }
+  },
+  "cuisine": {
+    "videoThumbnail": {
+      "recommendedWidth": 1280,
+      "recommendedHeight": 720,
+      "maxFileSizeMB": 3,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Video poster / thumbnail (16:9)"
+    },
+    "dishes.*.image": {
+      "recommendedWidth": 400,
+      "recommendedHeight": 400,
+      "maxFileSizeMB": 2,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Dish photo (square 1:1)"
+    }
+  },
+  "tours": {
+    "featuredImage": {
+      "recommendedWidth": 1440,
+      "recommendedHeight": 800,
+      "maxFileSizeMB": 5,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Featured tour background (wide landscape)"
+    },
+    "tour.cardImage": {
+      "recommendedWidth": 500,
+      "recommendedHeight": 700,
+      "maxFileSizeMB": 3,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "Tour card photo (portrait 5:7)"
+    }
+  },
+  "apps": {
+    "apps.*.icon": {
+      "recommendedWidth": 200,
+      "recommendedHeight": 200,
+      "maxFileSizeMB": 1,
+      "allowedFormats": ["png", "webp"],
+      "description": "App icon (square 1:1, prefer PNG with transparency)"
+    },
+    "apps.*.screenshot": {
+      "recommendedWidth": 400,
+      "recommendedHeight": 800,
+      "maxFileSizeMB": 2,
+      "allowedFormats": ["jpg", "jpeg", "png", "webp"],
+      "description": "App screenshot (portrait 1:2)"
+    }
+  }
+}

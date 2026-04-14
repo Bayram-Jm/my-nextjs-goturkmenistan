@@ -1,3 +1,5 @@
+import content from "../../content/footer.json";
+
 export default function Footer() {
   return (
     <footer className="bg-[#100706] border-t border-[#434343] py-16">
@@ -11,8 +13,7 @@ export default function Footer() {
               <span className="text-[#faf5f5]"> Turkmenistan</span>
             </div>
             <p className="font-inter text-sm text-[rgba(250,245,245,0.6)] leading-[1.6] mt-4">
-              Discover the world&apos;s last great undiscovered destination.
-              Ancient history, dramatic landscapes, and warm hospitality await.
+              {content.description}
             </p>
           </div>
 
@@ -22,24 +23,12 @@ export default function Footer() {
               EXPLORE
             </h4>
             <div className="flex flex-col gap-3 mt-4">
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Ashgabat
-              </a>
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Events
-              </a>
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Heritage Sites
-              </a>
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Nature
-              </a>
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Cuisine
-              </a>
-              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                Tours
-              </a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Ashgabat</a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Events</a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Heritage Sites</a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Nature</a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Cuisine</a>
+              <a href="#" className="font-inter text-sm text-[rgba(250,245,245,0.6)]">Tours</a>
             </div>
           </div>
 
@@ -50,10 +39,10 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-3 mt-4">
               <span className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                info@goturkmenistan.com
+                {content.contact.email}
               </span>
               <span className="font-inter text-sm text-[rgba(250,245,245,0.6)]">
-                +993 12 123 456
+                {content.contact.phone}
               </span>
             </div>
 
@@ -88,7 +77,7 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="h-px bg-[#434343] mt-10" />
         <p className="font-inter text-xs text-[rgba(250,245,245,0.4)] text-center mt-6">
-          &copy; 2026 Go Turkmenistan. All rights reserved.
+          {content.copyright}
         </p>
       </div>
     </footer>
