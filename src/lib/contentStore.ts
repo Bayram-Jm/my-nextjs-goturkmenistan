@@ -87,6 +87,7 @@ export async function setContent(section: string, data: unknown): Promise<void> 
       access: "public",
       contentType: "application/json",
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
     return;
   }
@@ -108,6 +109,7 @@ export async function uploadImage(
       access: "public",
       contentType,
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
     return blob.url;
   }
