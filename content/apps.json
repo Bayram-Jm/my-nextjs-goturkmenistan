@@ -3,12 +3,14 @@
   "subtitle": "An app that will make your travel easier.",
   "apps": [
     {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "name": "Online taxi",
       "description": "To call a taxi.",
       "icon": "/images/app-taxi-icon.png",
       "screenshot": "/images/app-taxi-screen.png"
     },
     {
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
       "name": "Gerekli",
       "description": "For food delivery.",
       "icon": "/images/app-geliber-icon.png",

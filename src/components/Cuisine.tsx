@@ -99,7 +99,7 @@ export default function Cuisine() {
         <div ref={carouselRef} className="flex gap-3.5 overflow-x-auto scrollbar-hide carousel-pl snap-x snap-mandatory">
           {content.dishes.map((dish, index) => (
             <motion.div
-              key={index}
+              key={dish.id}
               layoutId={`dish-card-${index}`}
               onClick={() => setSelectedDish(index)}
               className="min-w-[167px] flex flex-col flex-shrink-0 cursor-pointer snap-start"

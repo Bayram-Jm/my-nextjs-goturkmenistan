@@ -4,11 +4,11 @@
   "description": "Turkmenistan's heritage is a living tapestry of ancient traditions, from the intricate patterns of hand-woven carpets to the timeless architecture of Silk Road caravanserais. Step into a world where the past walks beside you.",
   "mainImage": "/images/heritage-main.png",
   "sites": [
-    { "name": "Dayahatyn",       "image": "/images/story-1.png" },
-    { "name": "Merw",            "image": "/images/story-2.png" },
-    { "name": "Koneurgench",     "image": "/images/story-3.png" },
-    { "name": "Astanababa",      "image": "/images/story-4.png" },
-    { "name": "Seyitjemalledin", "image": "/images/story-5.png" },
-    { "name": "Abiwerd",         "image": "/images/story-6.png" }
+    { "id": "a5b6c7d8-e9f0-1234-abcd-345678901234", "name": "Dayahatyn",       "image": "/images/story-1.png" },
+    { "id": "b6c7d8e9-f0a1-2345-bcde-456789012345", "name": "Merw",            "image": "/images/story-2.png" },
+    { "id": "c7d8e9f0-a1b2-3456-cdef-567890123456", "name": "Koneurgench",     "image": "/images/story-3.png" },
+    { "id": "d8e9f0a1-b2c3-4567-defa-678901234567", "name": "Astanababa",      "image": "/images/story-4.png" },
+    { "id": "e9f0a1b2-c3d4-5678-efab-789012345678", "name": "Seyitjemalledin", "image": "/images/story-5.png" },
+    { "id": "f0a1b2c3-d4e5-6789-fabc-890123456789", "name": "Abiwerd",         "image": "/images/story-6.png" }
   ]
 }

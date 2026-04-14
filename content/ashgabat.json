@@ -2,46 +2,57 @@
   "sectionTitle": "White Marble Magic",
   "images": [
     {
+      "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
       "src": "/images/ashgabat-1.jpg",
       "label": "Hotel yyldyz"
     },
     {
+      "id": "d4e5f6a7-b8c9-0123-defa-234567890123",
       "src": "/images/ashgabat-2.png",
       "label": "Wedding House"
     },
     {
+      "id": "e5f6a7b8-c9d0-1234-efab-345678901234",
       "src": "/images/ashgabat-3.png",
       "label": "Holiday in Ashgabat"
     },
     {
+      "id": "f6a7b8c9-d0e1-2345-fabc-456789012345",
       "src": "/images/ashgabat-4.png",
       "label": "Independence Park"
     },
     {
+      "id": "a7b8c9d0-e1f2-3456-abcd-567890123456",
       "src": "/images/ashgabat-5.png",
       "label": "Independence Monument"
     },
     {
+      "id": "b8c9d0e1-f2a3-4567-bcde-678901234567",
       "src": "/images/ashgabat-6.png",
       "label": "Monument to Neutrality"
     },
     {
+      "id": "c9d0e1f2-a3b4-5678-cdef-789012345678",
       "src": "/images/ashgabat-7.png",
       "label": "Indoor Ferris wheel"
     },
     {
+      "id": "d0e1f2a3-b4c5-6789-defa-890123456789",
       "src": "/images/ashgabat-8.png",
       "label": "Sport Hotel"
     },
     {
+      "id": "e1f2a3b4-c5d6-7890-efab-901234567890",
       "src": "/images/ashgabat-9.png",
       "label": "Hotel Ashgabat"
     },
     {
+      "id": "f2a3b4c5-d6e7-8901-fabc-012345678901",
       "src": "/images/ashgabat-10.png",
       "label": "Sunset in Ashgabat"
     },
     {
+      "id": "a3b4c5d6-e7f8-9012-abcd-123456789012",
       "src": "/images/ashgabat-11.png",
       "label": "Sunset in Ashgabat"
     }

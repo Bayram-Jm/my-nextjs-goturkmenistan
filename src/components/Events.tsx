@@ -65,7 +65,7 @@ export default function Events() {
       >
         {content.events.map((event, index) => (
           <motion.div
-            key={index}
+            key={event.id}
             layoutId={`event-card-${index}`}
             onClick={() => setSelectedId(index)}
             className="flex-shrink-0 w-[324px] h-[569px] border border-[#434343] rounded-[10px] overflow-hidden flex flex-col cursor-pointer snap-start"

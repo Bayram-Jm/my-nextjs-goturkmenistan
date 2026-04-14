@@ -62,7 +62,7 @@ export default function Nature() {
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 lg:gap-3 carousel-pl snap-x snap-mandatory">
           {content.cards.map((card, index) => (
             <motion.div
-              key={index}
+              key={card.id}
               layoutId={`nature-card-${index}`}
               onClick={() => setSelectedId(index)}
               className="min-w-[280px] lg:min-w-[344px] flex flex-col flex-shrink-0 cursor-pointer snap-start"

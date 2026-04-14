@@ -52,9 +52,9 @@ export default function Ashgabat() {
       {/* Carousel */}
       <div className="mt-10">
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 carousel-pl snap-x snap-mandatory">
-          {content.images.map((img, index) => (
+          {content.images.map((img) => (
             <div
-              key={index}
+              key={img.id}
               className="relative flex-shrink-0 w-[280px] h-[420px] lg:w-[344px] lg:h-[537px] rounded-[20px] overflow-hidden snap-start"
             >
               <Image src={img.src} alt={img.label} fill className="object-cover" />

@@ -20,8 +20,8 @@ export default function AppUse() {
 
         {/* App Cards */}
         <div className="grid grid-cols-2 gap-5 max-w-[340px] lg:max-w-none">
-          {content.apps.map((app, index) => (
-            <div key={index} className="flex flex-col items-center">
+          {content.apps.map((app) => (
+            <div key={app.id} className="flex flex-col items-center">
               <div className="flex flex-col items-center gap-3 pb-6">
                 <p className="font-righteous text-[18px] text-[#faf5f5] text-center">{app.name}</p>
                 <div className="w-[60px] h-[60px] relative rounded-[14px] overflow-hidden">

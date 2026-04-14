@@ -73,7 +73,7 @@ export default function Heritage() {
         <div ref={carouselRef} className="flex overflow-x-auto scrollbar-hide gap-2 lg:gap-6 carousel-pl snap-x snap-mandatory">
           {content.sites.map((story, index) => (
             <motion.div
-              key={index}
+              key={story.id}
               layoutId={`heritage-card-${index}`}
               onClick={() => setSelectedId(index)}
               className="min-w-[353px] lg:min-w-[384px] h-[214px] lg:h-[280px] rounded-[20px] overflow-hidden relative flex-shrink-0 cursor-pointer snap-start"

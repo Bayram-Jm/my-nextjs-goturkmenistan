@@ -193,7 +193,7 @@ export default function Tours({ onBookNow }: ToursProps) {
                 {/* Days */}
                 <div className="px-8 py-6 flex flex-col gap-6">
                   {tour.plan.map((item, i) => (
-                    <div key={i} className="flex gap-5">
+                    <div key={item.id} className="flex gap-5">
                       {/* Day indicator */}
                       <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-redhat font-bold text-[#100706]"

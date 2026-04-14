@@ -18,6 +18,7 @@ JWT-based authentication and file-system content persistence.
 9. [Adding a new field to an existing section](#9-adding-a-new-field-to-an-existing-section)
 10. [Configuring recommended image sizes](#10-configuring-recommended-image-sizes)
 11. [Security notes](#11-security-notes)
+12. [Managing carousel cards](#12-managing-carousel-cards)
 
 ---
 
@@ -263,3 +264,102 @@ Fields:
 | Dark mode | Forced light via `<meta name="color-scheme" content="light">` |
 | Uploads | Saved to `/public/uploads/` (git-ignored); originals in `/public/images/` are never modified |
 | `.auth.json` | Git-ignored. Contains bcrypt hash only. Never commit this file. |
+
+---
+
+## 12. Managing carousel cards
+
+Six sections have interactive carousels that you can manage directly from the admin panel:
+
+| Section | Carousel key | Max cards |
+|---------|-------------|-----------|
+| Ashgabat | `images` | 30 |
+| Events | `events` | 30 |
+| Heritage | `sites` | 30 |
+| Nature | `cards` | 30 |
+| Cuisine | `dishes` | 30 |
+| Apps | `apps` | 20 |
+
+Each carousel section shows a **CardListEditor** panel instead of the generic array editor.
+
+### Adding a card
+
+1. Click **Add Card** (top-right of the panel, or the dashed button at the bottom of long lists).
+2. Fill in all required fields. Image fields show a drag-and-drop uploader with size and format hints.
+3. Click **Create Card**. The card is saved immediately and appears at the end of the list.
+4. Drag it to the correct position if needed.
+
+> Images for new cards are uploaded with `skipSave=true` — the file is stored in
+> `/public/uploads/<section>/` immediately, but the content JSON is only written when you
+> click **Create Card**. Cancelling after uploading an image leaves a small orphan file; this
+> is harmless and can be cleaned up manually if needed.
+
+### Editing a card
+
+1. Click the **pencil icon** on any card row.
+2. Change any field. Image fields can be replaced by uploading a new file.
+3. Click **Save Changes**. Changes are persisted immediately — no separate "Save" click needed.
+
+> When you replace an image and the old path started with `/uploads/`, the old file is
+> automatically deleted from disk.
+
+### Deleting a card
+
+1. Click the **trash icon** on the card row.
+2. Confirm in the modal. **This cannot be undone.**
+3. If the card's image was in `/public/uploads/`, it is deleted from disk.
+
+> You cannot delete the last remaining card in a carousel. At least one card must stay.
+
+### Duplicating a card
+
+1. Click the **copy icon** on the card row.
+2. A copy is appended to the end of the list with a new unique ID.
+3. Both the original and the copy point to the **same image file** — no file is duplicated.
+   If you want independent images, edit the copy and upload a new image.
+
+### Reordering cards
+
+Drag any card by the **⠿ grip handle** on the left. Release to drop.  
+The new order is saved automatically — a small "Saving…" indicator appears while the request is in flight. If the network request fails, the order rolls back to the previous state and a toast error is shown.
+
+### Bulk select & delete
+
+1. Click the **checkbox** icon on the left of any card to select it.
+2. Click the unlabelled **checkbox header** (top-left of the panel) to select / deselect all.
+3. When one or more cards are selected, a red **Delete N** button appears in the banner above the list.
+4. Confirm in the modal. All selected cards (and their `/uploads/` images) are deleted at once.
+
+> The bulk-delete API refuses to delete all cards — at least one must remain.
+
+### Live preview
+
+Click the **Preview** button (top-right of the panel) to open a side panel with an iframe showing the live section of the site.
+
+- The iframe auto-reloads after every successful mutation (add, edit, delete, reorder).
+- Click **↗** in the panel header to open the section in a full browser tab instead.
+- Press **Esc** or click the × button to close the panel.
+
+### Limits and recommendations
+
+| | Recommendation |
+|---|---|
+| **Minimum cards** | 1 (enforced — cannot delete the last card) |
+| **Maximum cards** | 20 (Apps) or 30 (all others) — hardcoded in `src/lib/carouselConfig.ts` |
+| **Image formats** | jpg, png, webp (exact list per section in `content/image-specs.json`) |
+| **Image size** | See per-section spec. Oversized uploads are blocked; wrong dimensions show a yellow warning |
+| **Recommended count** | 6–15 for a smooth carousel experience; very long lists slow the initial page load |
+
+### Adding carousel support to a new section
+
+1. Add the section entry to `src/lib/carouselConfig.ts`:
+   ```ts
+   mysection: {
+     arrayPath: "items",      // key of the array in your JSON
+     imageField: "image",     // field used as thumbnail preview
+     titleField: "title",     // field shown as the card label
+     maxCards: 25,
+   },
+   ```
+2. Ensure each item in the JSON array has a unique `id` field (string UUID). New cards get IDs auto-generated by the server; existing data needs a one-time migration.
+3. The `CardListEditor` will appear automatically — no changes to `ContentForm` needed.

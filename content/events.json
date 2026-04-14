@@ -3,6 +3,7 @@
   "sectionSubtitle": "Discover the vibrant culture and traditions of Turkmenistan through its most exciting events",
   "events": [
     {
+      "id": "b4c5d6e7-f8a9-0123-bcde-234567890123",
       "title": "Getting to Know Akhal-Teke Horses",
       "category": "Sport",
       "location": "Ashgabat - Ipadrom",
@@ -10,6 +11,7 @@
       "image": "/images/event-new-1.jpg"
     },
     {
+      "id": "c5d6e7f8-a9b0-1234-cdef-345678901234",
       "title": "Turkmen Fashion Evenings",
       "category": "Fashion",
       "location": "Ashgabat - Gulzemin",
@@ -17,6 +19,7 @@
       "image": "/images/event-new-2.jpg"
     },
     {
+      "id": "d6e7f8a9-b0c1-2345-defa-456789012345",
       "title": "World Of Dolls And Toys",
       "category": "Exhibition",
       "location": "Ashgabat - Shopping center Bagtyyarlyk",
@@ -24,6 +27,7 @@
       "image": "/images/event-new-3.jpg"
     },
     {
+      "id": "e7f8a9b0-c1d2-3456-efab-567890123456",
       "title": "Symphone Orchestra Under Resul Kylychev",
       "category": "Orchestra",
       "location": "Ashgabat - Shopping center Bagtyyarlyk",
@@ -31,6 +35,7 @@
       "image": "/images/event-new-4.jpg"
     },
     {
+      "id": "f8a9b0c1-d2e3-4567-fabc-678901234567",
       "title": "Symphone Orchestra Under Tahir Atayev",
       "category": "Orchestra",
       "location": "Ashgabat - Shopping center Bagtyyarlyk",
@@ -38,6 +43,7 @@
       "image": "/images/event-new-5.jpg"
     },
     {
+      "id": "a9b0c1d2-e3f4-5678-abcd-789012345678",
       "title": "Exhibition, Kakageldi Gurbangeldieva",
       "category": "Exhibition",
       "location": "Ashgabat - Academy of Arts of Turkmenistan",
@@ -45,6 +51,7 @@
       "image": "/images/event-new-6.jpg"
     },
     {
+      "id": "b0c1d2e3-f4a5-6789-bcde-890123456789",
       "title": "Concert \"Selected\" Orchestra Tahir Atyeva",
       "category": "Orchestra",
       "location": "Magtymguly Musical and Drama Theater",
@@ -52,6 +59,7 @@
       "image": "/images/event-new-7.jpg"
     },
     {
+      "id": "c1d2e3f4-a5b6-7890-cdef-901234567890",
       "title": "Korean Culture Week",
       "category": "Culture",
       "location": "Ashgabat - Shopping center \"Arkach\"",
@@ -59,6 +67,7 @@
       "image": "/images/event-new-8.jpg"
     },
     {
+      "id": "d2e3f4a5-b6c7-8901-defa-012345678901",
       "title": "Exhibition \"Contemporary Art of Central Asia\"",
       "category": "Exhibition",
       "location": "Ashgabat - Academy of Arts of Turkmenistan",
@@ -66,6 +75,7 @@
       "image": "/images/event-new-9.jpg"
     },
     {
+      "id": "e3f4a5b6-c7d8-9012-efab-123456789012",
       "title": "Indian Dance and Music",
       "category": "Dance",
       "location": "Ashgabat - VATAN Cinema and Concert Hall",
@@ -73,6 +83,7 @@
       "image": "/images/event-new-10.jpg"
     },
     {
+      "id": "f4a5b6c7-d8e9-0123-fabc-234567890123",
       "title": "Turkmen Fashion Evenings",
       "category": "Fashion",
       "location": "Ashgabat - Gulzemin",

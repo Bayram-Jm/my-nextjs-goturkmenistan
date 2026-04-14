@@ -27,6 +27,8 @@ import {
 import ImageUploader, { type ImageSpec } from "./ImageUploader";
 import { setDeep, normalizePathForSpec } from "@/lib/jsonUtils";
 import rawImageSpecs from "../../../content/image-specs.json";
+import CardListEditor from "./CardListEditor";
+import { CAROUSEL_CONFIG } from "@/lib/carouselConfig";
 
 /* ─── Types ──────────────────────────────────────────────────────────────── */
 type Primitive = string | number | boolean | null;
@@ -40,12 +42,19 @@ interface FormContextValue {
   section: string;
   getImageSpec: (fieldPath: string) => ImageSpec | null;
   onImageSaved: (fieldPath: string, newPath: string) => void;
+  /** Updates both content and saved state — used by CarouselManager so
+   *  carousel mutations don't leave the form in a "dirty" state. */
+  onImmediateSave: (dotPath: string, newValue: JsonValue) => void;
+  /** Href for the live-preview iframe in CardListEditor. */
+  previewHref: string;
 }
 
-const FormContext = createContext<FormContextValue>({
+export const FormContext = createContext<FormContextValue>({
   section: "",
   getImageSpec: () => null,
   onImageSaved: () => {},
+  onImmediateSave: () => {},
+  previewHref: "/",
 });
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
@@ -154,6 +163,12 @@ export default function ContentForm({
     toast.success("Image uploaded successfully");
   }, []);
 
+  /* Carousel mutation: also syncs saved so isDirty stays false */
+  const handleImmediateSave = useCallback((dotPath: string, newValue: JsonValue) => {
+    setContent((prev) => setDeep(prev, dotPath, newValue));
+    setSaved((prev) => setDeep(prev, dotPath, newValue));
+  }, []);
+
   /* Resolve spec for a given field path in this section */
   const getImageSpec = useCallback(
     (fieldPath: string): ImageSpec | null => {
@@ -217,7 +232,7 @@ export default function ContentForm({
   }
 
   return (
-    <FormContext.Provider value={{ section, getImageSpec, onImageSaved: handleImageSaved }}>
+    <FormContext.Provider value={{ section, getImageSpec, onImageSaved: handleImageSaved, onImmediateSave: handleImmediateSave, previewHref }}>
       <div className="max-w-[860px]">
         {/* Back */}
         <Link
@@ -319,6 +334,9 @@ function ObjectFields({
   errors: Record<string, string>;
   depth: number;
 }) {
+  const { section, onImmediateSave } = useContext(FormContext);
+  const carouselConfig = CAROUSEL_CONFIG[section];
+
   const p = (key: string) => (basePath ? `${basePath}.${key}` : key);
   const entries = Object.entries(obj);
 
@@ -374,17 +392,43 @@ function ObjectFields({
       ))}
 
       {/* ── Array fields ──────────────────────────────────────────── */}
-      {arrays.map(([key, value]) => (
-        <ArrayGroup
-          key={p(key)}
-          fieldKey={key}
-          items={value as JsonValue[]}
-          path={p(key)}
-          onChange={onChange}
-          errors={errors}
-          depth={depth + 1}
-        />
-      ))}
+      {arrays.map(([key, value]) => {
+        const fullPath = p(key);
+        /* Use CarouselManager when this array is the configured carousel
+           for the current section (match by arrayPath at any nesting level) */
+        const isCarousel =
+          carouselConfig &&
+          (carouselConfig.arrayPath === fullPath ||
+            carouselConfig.arrayPath === key) &&
+          Array.isArray(value) &&
+          (value as JsonValue[]).length > 0 &&
+          typeof ((value as JsonValue[])[0] as JsonObject)?.id === "string";
+
+        if (isCarousel) {
+          return (
+            <CardListEditor
+              key={fullPath}
+              fieldKey={key}
+              items={value as JsonObject[]}
+              section={section}
+              config={carouselConfig}
+              onMutation={(newItems: JsonObject[]) => onImmediateSave(fullPath, newItems)}
+            />
+          );
+        }
+
+        return (
+          <ArrayGroup
+            key={fullPath}
+            fieldKey={key}
+            items={value as JsonValue[]}
+            path={fullPath}
+            onChange={onChange}
+            errors={errors}
+            depth={depth + 1}
+          />
+        );
+      })}
     </div>
   );
 }

@@ -43,6 +43,9 @@ export async function POST(req: NextRequest) {
   const section = formData.get("section") as string | null;
   const fieldPath = formData.get("fieldPath") as string | null;
   const optimize = formData.get("optimize") === "true";
+  // skipSave=true: upload the file and return the path but do NOT update the
+  // content JSON or delete the old file. Used by the "add/edit card" modal.
+  const skipSave = formData.get("skipSave") === "true";
 
   if (!file || !section || !fieldPath) {
     return NextResponse.json({ error: "Missing file, section, or fieldPath" }, { status: 400 });
@@ -131,23 +134,25 @@ export async function POST(req: NextRequest) {
   /* ── Public path for the new file ────────────────────────────────────── */
   const newPublicPath = `/uploads/${section}/${filename}`;
 
-  /* ── Update content JSON with new path ───────────────────────────────── */
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const updated = setDeep(currentContent as any, fieldPath, newPublicPath);
-    fs.writeFileSync(contentFilePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
-  } catch (err) {
-    console.error("Failed to update content JSON:", err);
-    // Return success anyway — image was saved, JSON update can be retried
-  }
-
-  /* ── Delete old file if it was a previously uploaded file ────────────── */
-  if (oldPath && oldPath.startsWith("/uploads/")) {
-    const oldAbsPath = path.join(process.cwd(), "public", oldPath);
+  if (!skipSave) {
+    /* ── Update content JSON with new path ─────────────────────────────── */
     try {
-      if (fs.existsSync(oldAbsPath)) fs.unlinkSync(oldAbsPath);
-    } catch {
-      // Non-critical
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const updated = setDeep(currentContent as any, fieldPath, newPublicPath);
+      fs.writeFileSync(contentFilePath, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+    } catch (err) {
+      console.error("Failed to update content JSON:", err);
+      // Return success anyway — image was saved, JSON update can be retried
+    }
+
+    /* ── Delete old file if it was a previously uploaded file ──────────── */
+    if (oldPath && oldPath.startsWith("/uploads/")) {
+      const oldAbsPath = path.join(process.cwd(), "public", oldPath);
+      try {
+        if (fs.existsSync(oldAbsPath)) fs.unlinkSync(oldAbsPath);
+      } catch {
+        // Non-critical
+      }
     }
   }
 

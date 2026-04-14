@@ -7,13 +7,13 @@
   "mustTryLabel": "Must-Try Dishes",
   "creditRestaurant": "TOR",
   "dishes": [
-    { "name": "Autumn Velvet", "label": "National dish", "image": "/images/dish-1.jpg" },
-    { "name": "Yarma",         "label": "National dish", "image": "/images/dish-2.png" },
-    { "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-3.png" },
-    { "name": "Gowurma",       "label": "National dish", "image": "/images/dish-4.png" },
-    { "name": "Salad",         "label": "National dish", "image": "/images/dish-5.png" },
-    { "name": "Unash",         "label": "National dish", "image": "/images/dish-6.png" },
-    { "name": "Somsa",         "label": "National dish", "image": "/images/dish-7.png" },
-    { "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-8.png" }
+    { "id": "d6f7a8b9-c0e1-2345-defa-456789012345", "name": "Autumn Velvet", "label": "National dish", "image": "/images/dish-1.jpg" },
+    { "id": "e7a8b9c0-d1f2-3456-efab-567890123456", "name": "Yarma",         "label": "National dish", "image": "/images/dish-2.png" },
+    { "id": "f8b9c0d1-e2a3-4567-fabc-678901234567", "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-3.png" },
+    { "id": "a9c0d1e2-f3b4-5678-abcd-789012345678", "name": "Gowurma",       "label": "National dish", "image": "/images/dish-4.png" },
+    { "id": "b0d1e2f3-a4c5-6789-bcde-890123456789", "name": "Salad",         "label": "National dish", "image": "/images/dish-5.png" },
+    { "id": "c1e2f3a4-b5d6-7890-cdef-901234567890", "name": "Unash",         "label": "National dish", "image": "/images/dish-6.png" },
+    { "id": "d2f3a4b5-c6e7-8901-defa-012345678901", "name": "Somsa",         "label": "National dish", "image": "/images/dish-7.png" },
+    { "id": "e3a4b5c6-d7f8-9012-efab-123456789012", "name": "Towuk chorba",  "label": "National dish", "image": "/images/dish-8.png" }
   ]
 }
