@@ -34,9 +34,13 @@ function readStore(): AuthStore {
 }
 
 function writeStore(patch: Partial<AuthStore>): void {
-  const current = readStore();
-  const next = { ...current, ...patch };
-  fs.writeFileSync(AUTH_JSON_PATH, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  try {
+    const current = readStore();
+    const next = { ...current, ...patch };
+    fs.writeFileSync(AUTH_JSON_PATH, JSON.stringify(next, null, 2) + "\n", "utf-8");
+  } catch {
+    // Silently ignore on read-only filesystems (e.g. Vercel Serverless)
+  }
 }
 
 /* ── Public API ─────────────────────────────────────────────────────────── */
