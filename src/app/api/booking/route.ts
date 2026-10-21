@@ -3,7 +3,16 @@ import { z } from "zod";
 
 /* ─── Config ─────────────────────────────────────────────────────────────── */
 const TO_EMAIL = process.env.BOOKING_TO_EMAIL || "info@go-turkmenistan.com";
-const FROM_EMAIL = process.env.BOOKING_FROM_EMAIL || "Go Turkmenistan <onboarding@resend.dev>";
+const DEFAULT_FROM = "Go Turkmenistan <booking@go-turkmenistan.com>";
+
+// Env values pasted into dashboards often carry stray quotes/whitespace — clean and validate,
+// falling back to the default sender rather than failing every booking.
+const FROM_RE = /^(?:[^<>]+<[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+>|[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+)$/;
+const rawFrom = (process.env.BOOKING_FROM_EMAIL ?? "").trim().replace(/^["']|["']$/g, "").trim();
+const FROM_EMAIL = FROM_RE.test(rawFrom) ? rawFrom : DEFAULT_FROM;
+if (rawFrom && FROM_EMAIL !== rawFrom) {
+  console.warn(`[booking] Ignoring invalid BOOKING_FROM_EMAIL ${JSON.stringify(rawFrom)}, using default`);
+}
 
 /* ─── Schema ─────────────────────────────────────────────────────────────── */
 const BookingSchema = z.object({
