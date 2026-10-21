@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -16,7 +17,10 @@ interface FormData {
   phone: string;
   startDate: string;
   endDate: string;
+  website: string; // honeypot
 }
+
+const TOUR_NAME = "Gates of Hell & Ancient Merw";
 
 const inputClass =
   "w-full h-[48px] bg-[rgba(250,245,245,0.06)] border border-[rgba(67,67,67,0.6)] rounded-xl px-4 font-inter text-[15px] text-[#faf5f5] placeholder:text-[rgba(250,245,245,0.25)] outline-none focus:border-[rgba(240,30,14,0.6)] transition-colors";
@@ -25,14 +29,51 @@ const labelClass =
   "block font-redhat text-[11px] font-bold text-[rgba(250,245,245,0.45)] uppercase tracking-[1.2px] mb-1.5";
 
 export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
-  const { register, handleSubmit, watch, setValue } = useForm<FormData>();
+  const { register, handleSubmit, watch, setValue, reset } = useForm<FormData>();
   const startDate = watch("startDate") ?? "";
   const endDate = watch("endDate") ?? "";
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = (data: FormData) => {
-    console.log("Booking submitted:", data);
+  const onSubmit = async (data: FormData) => {
+    setStatus("sending");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, tour: TOUR_NAME }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Could not send booking. Please try again.");
+      }
+      setStatus("sent");
+      reset();
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Could not send booking. Please try again.");
+    }
+  };
+
+  const handleClose = () => {
+    setStatus("idle");
+    setErrorMsg("");
     onClose?.();
   };
+
+  const statusMessage =
+    status === "sent" ? (
+      <p className="text-center text-[13px] font-inter text-[#0ff216] leading-[1.5]">
+        Thank you! Your request has been sent. We&apos;ll contact you within 24 hours.
+      </p>
+    ) : status === "error" ? (
+      <p className="text-center text-[13px] font-inter text-[#ff6b3d] leading-[1.5]">{errorMsg}</p>
+    ) : null;
+
+  const honeypot = (
+    <input {...register("website")} type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+  );
 
   return (
     <AnimatePresence>
@@ -45,7 +86,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={onClose}
+            onClick={handleClose}
           />
 
           {/* ─────────────────── MOBILE bottom sheet ─────────────────── */}
@@ -67,7 +108,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
                 Book Your Adventure
               </h2>
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="w-10 h-10 border border-[#434343] rounded-full flex items-center justify-center shrink-0"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -81,17 +122,18 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
             </p>
 
             <form onSubmit={handleSubmit(onSubmit)} className="px-6 mt-6 flex flex-col gap-5 pb-8">
+              {honeypot}
               <div>
                 <label className={labelClass}>Full Name</label>
-                <input {...register("fullName")} type="text" placeholder="e.g. Doe Jones" className={inputClass} />
+                <input {...register("fullName", { required: true })} type="text" required placeholder="e.g. Doe Jones" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Email Address</label>
-                <input {...register("email")} type="email" placeholder="jones@mail.com" className={inputClass} />
+                <input {...register("email", { required: true })} type="email" required placeholder="jones@mail.com" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Phone Number</label>
-                <input {...register("phone")} type="tel" placeholder="+X XXX XXX" className={inputClass} />
+                <input {...register("phone", { required: true })} type="tel" required placeholder="+X XXX XXX" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Travel Dates</label>
@@ -125,13 +167,16 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
 
               <button
                 type="submit"
-                className="w-full h-[51px] rounded-[14px] bg-gradient-to-r from-[#f01e0e] to-[#ff6b3d] flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                disabled={status === "sending"}
+                className="w-full h-[51px] disabled:opacity-60 rounded-[14px] bg-gradient-to-r from-[#f01e0e] to-[#ff6b3d] flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
               >
-                <span className="font-righteous text-[15px] text-white uppercase tracking-[0.5px]">CONFIRM BOOKING</span>
+                <span className="font-righteous text-[15px] text-white uppercase tracking-[0.5px]">{status === "sending" ? "SENDING…" : "CONFIRM BOOKING"}</span>
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                   <path d="M3.75 9H14.25M14.25 9L9.75 4.5M14.25 9L9.75 13.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
+
+              {statusMessage}
 
               <p className="text-center text-[11px] font-inter text-[rgba(250,245,245,0.3)] leading-[1.5]">
                 No payment required now. Our team will contact you within 24 hours to finalize your trip.
@@ -161,7 +206,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
                   </p>
                 </div>
                 <button
-                  onClick={onClose}
+                  onClick={handleClose}
                   className="w-10 h-10 border border-[rgba(67,67,67,0.7)] rounded-full flex items-center justify-center shrink-0 hover:border-[#faf5f5] transition-colors mt-1"
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -171,15 +216,16 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="mt-7 flex flex-col gap-5 flex-1">
+                {honeypot}
                 {/* Name + Email row */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>Full Name</label>
-                    <input {...register("fullName")} type="text" placeholder="e.g. Doe Jones" className={inputClass} />
+                    <input {...register("fullName", { required: true })} type="text" required placeholder="e.g. Doe Jones" className={inputClass} />
                   </div>
                   <div>
                     <label className={labelClass}>Email Address</label>
-                    <input {...register("email")} type="email" placeholder="jones@mail.com" className={inputClass} />
+                    <input {...register("email", { required: true })} type="email" required placeholder="jones@mail.com" className={inputClass} />
                   </div>
                 </div>
 
@@ -187,7 +233,7 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <label className={labelClass}>Phone Number</label>
-                    <input {...register("phone")} type="tel" placeholder="+X XXX XXX" className={inputClass} />
+                    <input {...register("phone", { required: true })} type="tel" required placeholder="+X XXX XXX" className={inputClass} />
                   </div>
                   <div>
                     <label className={labelClass}>Arrival Date</label>
@@ -237,16 +283,19 @@ export default function BookTicket({ isOpen, onClose }: BookTicketProps) {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full h-[54px] rounded-[14px] flex items-center justify-center gap-2.5 font-righteous text-[15px] text-white uppercase tracking-[0.8px] hover:opacity-90 active:scale-[0.99] transition-all"
+                  disabled={status === "sending"}
+                  className="w-full h-[54px] disabled:opacity-60 rounded-[14px] flex items-center justify-center gap-2.5 font-righteous text-[15px] text-white uppercase tracking-[0.8px] hover:opacity-90 active:scale-[0.99] transition-all"
                   style={{ background: "linear-gradient(90deg, #e93725 12%, #e9364d 34%, #e93683 60%, #e938c9 100%)" }}
                 >
-                  CONFIRM BOOKING
+                  {status === "sending" ? "SENDING…" : "CONFIRM BOOKING"}
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                     <path d="M3.75 9H14.25M14.25 9L9.75 4.5M14.25 9L9.75 13.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
 
-                <p className="text-center text-[11px] font-inter text-[rgba(250,245,245,0.3)] leading-[1.5]">
+                {statusMessage}
+
+              <p className="text-center text-[11px] font-inter text-[rgba(250,245,245,0.3)] leading-[1.5]">
                   No payment required now. Our team will contact you within 24 hours to finalize your trip.
                 </p>
               </form>
